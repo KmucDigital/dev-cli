@@ -1,0 +1,49 @@
+MIT License (Private & Non-Commercial Use Only)
+
+Copyright (c) 2025 KMUC
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction for PRIVATE and NON-COMMERCIAL use only,
+including without limitation the rights to use, copy, modify, merge, publish,
+and distribute copies of the Software, subject to the following conditions:
+
+1. PRIVATE USE: The Software may only be used for private, personal, educational,
+   or non-profit purposes. Any commercial use, including but not limited to:
+   - Use in commercial products or services
+   - Selling or licensing the Software
+   - Use in revenue-generating applications
+   - Use by commercial entities in their business operations
+   is strictly prohibited without a separate commercial license.
+
+2. ATTRIBUTION: The above copyright notice and this permission notice shall be
+   included in all copies or substantial portions of the Software.
+
+3. NO WARRANTY: THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+   EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO
+   EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES
+   OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+   DEALINGS IN THE SOFTWARE.
+
+4. COMMERCIAL LICENSE: For commercial use, please contact the maintainers to
+   obtain a commercial license.
+
+---
+
+ALLOWED USE CASES:
+- Personal projects and hobby development
+- Learning and educational purposes
+- Open source projects (non-commercial)
+- Non-profit organizations
+- Academic research
+
+NOT ALLOWED WITHOUT COMMERCIAL LICENSE:
+- Use in commercial products or services
+- Integration into paid software or SaaS platforms
+- Use by businesses for their commercial operations
+- Reselling or sublicensing the software
+- Revenue-generating applications using this tool
+
+For questions about licensing, please open an issue on GitHub.

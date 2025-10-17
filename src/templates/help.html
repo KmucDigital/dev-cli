@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KMUC Hoster CLI - Dokumentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --bg-code: #111827;
+            --text: #f1f5f9;
+            --text-dim: #94a3b8;
+            --border: #334155;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #1a202c 100%);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            padding: 3rem 0;
+            border-bottom: 2px solid var(--border);
+            margin-bottom: 3rem;
+        }
+
+        .logo {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: var(--text-dim);
+            font-size: 1.2rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--primary);
+            border-radius: 1rem;
+            font-size: 0.85rem;
+            margin-top: 1rem;
+        }
+
+        .section {
+            background: var(--bg-card);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+
+        .command {
+            background: var(--bg-code);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .command-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        code {
+            background: var(--bg-code);
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.25rem;
+            font-family: 'Courier New', monospace;
+            color: var(--accent);
+            font-size: 0.9rem;
+        }
+
+        .code-block {
+            background: var(--bg-code);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .code-block code {
+            background: none;
+            padding: 0;
+            color: var(--success);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: var(--bg-dark);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            border: 1px solid var(--border);
+        }
+
+        .feature-card h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .steps {
+            counter-reset: step;
+        }
+
+        .step {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .step::before {
+            counter-increment: step;
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 2rem;
+            height: 2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .option-list {
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        .option-list li {
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            background: var(--bg-dark);
+            border-left: 3px solid var(--primary);
+            border-radius: 0.25rem;
+        }
+
+        .option-list li strong {
+            color: var(--primary);
+        }
+
+        .warning {
+            background: rgba(245, 158, 11, 0.1);
+            border-left: 4px solid var(--warning);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0.25rem;
+        }
+
+        .success {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid var(--success);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0.25rem;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: var(--bg-dark);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: var(--bg-dark);
+        }
+
+        .nav {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .nav a {
+            color: var(--text);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            background: var(--bg-card);
+            border-radius: 0.5rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .nav a:hover {
+            background: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--text-dim);
+            border-top: 1px solid var(--border);
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">🚀</div>
+            <h1>KMUC Hoster CLI</h1>
+            <p class="subtitle">Professionelles Docker-Hosting für Entwickler</p>
+            <span class="badge">v1.0.0 - Private & Non-Commercial Use</span>
+        </header>
+
+        <nav class="nav">
+            <a href="#overview">Übersicht</a>
+            <a href="#installation">Installation</a>
+            <a href="#commands">Befehle</a>
+            <a href="#workflow">Workflow</a>
+            <a href="#examples">Beispiele</a>
+            <a href="#troubleshooting">Fehlerbehandlung</a>
+        </nav>
+
+        <section id="overview" class="section">
+            <h2>📖 Was ist KMUC Hoster CLI?</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 2rem;">
+                KMUC Hoster CLI ist ein leistungsstarkes Tool, das die Docker-Containerisierung
+                und das Deployment deiner Projekte automatisiert. Egal ob Express, Next.js, React,
+                oder eine statische Website – in wenigen Minuten ist alles deployment-ready.
+            </p>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h4>Automatische Konfiguration</h4>
+                    <p>Generiert optimierte Dockerfiles, docker-compose.yml und alle notwendigen Konfigurationsdateien.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🗄️</div>
+                    <h4>Datenbank-Support</h4>
+                    <p>Integrierte Unterstützung für PostgreSQL, MongoDB, MySQL und Redis mit automatischer Konfiguration.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h4>Domain & SSL</h4>
+                    <p>Automatisches Setup von Nginx Reverse Proxy und Let's Encrypt SSL-Zertifikaten.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h4>Deployment Scripts</h4>
+                    <p>Fertige Scripts für VPS-Deployment mit SSH, Docker und automatischen Updates.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💾</div>
+                    <h4>Progress Tracking</h4>
+                    <p>Speichert deinen Fortschritt automatisch – du kannst jederzeit fortfahren.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h4>Best Practices</h4>
+                    <p>Multi-stage Builds, Non-root User, Health Checks und Security-optimierte Konfigurationen.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="installation" class="section">
+            <h2>📦 Installation</h2>
+
+            <div class="steps">
+                <div class="step">
+                    <h4>Repository klonen oder Package installieren</h4>
+                    <div class="code-block">
+                        <code>npm install -g kmuc-hoster-ci</code>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <h4>Verfügbarkeit prüfen</h4>
+                    <div class="code-block">
+                        <code>kmuc-hoster --version</code>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <h4>Docker installieren (falls noch nicht vorhanden)</h4>
+                    <div class="code-block">
+                        <code>docker --version<br>docker-compose --version</code>
+                    </div>
+                    <p style="margin-top: 0.5rem; color: var(--text-dim);">
+                        Download: <a href="https://docs.docker.com/get-docker/" style="color: var(--primary);">https://docs.docker.com/get-docker/</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="commands" class="section">
+            <h2>⚙️ Verfügbare Befehle</h2>
+
+            <div class="command">
+                <div class="command-title">
+                    <span>🎯</span>
+                    <code>kmuc-hoster init</code>
+                </div>
+                <p><strong>Beschreibung:</strong> Initialisiert ein neues Projekt mit vollständigem Docker-Setup.</p>
+
+                <h4 style="margin-top: 1.5rem; color: var(--text);">Erstellt folgende Dateien:</h4>
+                <ul class="option-list">
+                    <li>✓ <strong>Dockerfile</strong> - Optimiert für dein Projekt-Framework</li>
+                    <li>✓ <strong>docker-compose.yml</strong> - Mit allen Services (App, Datenbank, nginx)</li>
+                    <li>✓ <strong>.dockerignore</strong> - Verhindert unnötige Dateien im Image</li>
+                    <li>✓ <strong>.env.example</strong> - Template für Environment Variables</li>
+                    <li>✓ <strong>README.md</strong> - Projekt-Dokumentation</li>
+                    <li>✓ <strong>scripts/deploy.sh</strong> - VPS Deployment Script (optional)</li>
+                    <li>✓ <strong>scripts/setup-domain.sh</strong> - Domain & SSL Setup (optional)</li>
+                    <li>✓ <strong>nginx.conf</strong> - Reverse Proxy Konfiguration (optional)</li>
+                </ul>
+
+                <div class="code-block" style="margin-top: 1rem;">
+                    <code>kmuc-hoster init</code>
+                </div>
+            </div>
+
+            <div class="command">
+                <div class="command-title">
+                    <span>🚀</span>
+                    <code>kmuc-hoster publish</code>
+                </div>
+                <p><strong>Beschreibung:</strong> Baut und startet deine Container automatisch - der einfachste Weg zum Deployment!</p>
+
+                <h4 style="margin-top: 1.5rem; color: var(--text);">Was passiert:</h4>
+                <div class="steps">
+                    <div class="step">Prüft ob docker-compose.yml und Dockerfile existieren</div>
+                    <div class="step">Erstellt .env aus .env.example (falls nötig)</div>
+                    <div class="step">Validiert Docker Installation</div>
+                    <div class="step">Stoppt alte Container</div>
+                    <div class="step">Validiert Dockerfile Syntax</div>
+                    <div class="step">Baut neue Docker Images</div>
+                    <div class="step">Startet alle Container</div>
+                    <div class="step">Prüft Status und zeigt URL an</div>
+                </div>
+
+                <div class="code-block">
+                    <code>kmuc-hoster publish</code>
+                </div>
+
+                <div class="success">
+                    <strong>💡 Tipp:</strong> Nach erfolgreichem Start öffnet sich deine App automatisch auf dem konfigurierten Port!
+                </div>
+            </div>
+
+            <div class="command">
+                <div class="command-title">
+                    <span>📤</span>
+                    <code>kmuc-hoster deploy</code>
+                </div>
+                <p><strong>Beschreibung:</strong> Deployed dein Projekt auf einen VPS/Server via SSH.</p>
+
+                <h4 style="margin-top: 1.5rem; color: var(--text);">Voraussetzungen:</h4>
+                <ul class="option-list">
+                    <li>✓ SSH-Zugriff zum Server</li>
+                    <li>✓ Docker auf dem Server installiert</li>
+                    <li>✓ Deploy-Scripts wurden mit <code>init</code> erstellt</li>
+                </ul>
+
+                <div class="code-block">
+                    <code>kmuc-hoster deploy</code>
+                </div>
+            </div>
+
+            <div class="command">
+                <div class="command-title">
+                    <span>❓</span>
+                    <code>kmuc-hoster help</code>
+                </div>
+                <p><strong>Beschreibung:</strong> Öffnet diese Hilfe-Dokumentation im Browser.</p>
+
+                <div class="code-block">
+                    <code>kmuc-hoster help</code>
+                </div>
+            </div>
+        </section>
+
+        <section id="workflow" class="section">
+            <h2>🔄 Kompletter Workflow</h2>
+
+            <h3>Lokales Development</h3>
+            <div class="steps">
+                <div class="step">
+                    <h4>Projekt initialisieren</h4>
+                    <div class="code-block">
+                        <code>cd mein-projekt<br>kmuc-hoster init</code>
+                    </div>
+                    <p style="color: var(--text-dim); margin-top: 0.5rem;">
+                        Beantworte die interaktiven Fragen zu deinem Projekt.
+                    </p>
+                </div>
+
+                <div class="step">
+                    <h4>Environment Variables anpassen</h4>
+                    <div class="code-block">
+                        <code>cp .env.example .env<br># Bearbeite .env mit deinen Werten</code>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <h4>Container starten</h4>
+                    <div class="code-block">
+                        <code>kmuc-hoster publish</code>
+                    </div>
+                    <p style="color: var(--text-dim); margin-top: 0.5rem;">
+                        Oder manuell: <code>docker-compose up -d</code>
+                    </p>
+                </div>
+
+                <div class="step">
+                    <h4>Logs anzeigen</h4>
+                    <div class="code-block">
+                        <code>docker-compose logs -f</code>
+                    </div>
+                </div>
+            </div>
+
+            <h3>VPS Deployment</h3>
+            <div class="steps">
+                <div class="step">
+                    <h4>Deploy-Script ausführen</h4>
+                    <div class="code-block">
+                        <code>./scripts/deploy.sh</code>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <h4>Domain & SSL einrichten (optional)</h4>
+                    <div class="code-block">
+                        <code>./scripts/setup-domain.sh</code>
+                    </div>
+                    <div class="warning">
+                        <strong>⚠️ Wichtig:</strong> Stelle sicher, dass deine Domain bereits auf die Server-IP zeigt!
+                    </div>
+                </div>
+
+                <div class="step">
+                    <h4>Status prüfen</h4>
+                    <div class="code-block">
+                        <code>./scripts/docker-helpers.sh logs<br>./scripts/docker-helpers.sh status</code>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="examples" class="section">
+            <h2>💡 Beispiele & Use Cases</h2>
+
+            <h3>Express.js API mit PostgreSQL</h3>
+            <div class="code-block">
+                <code># Init mit folgenden Antworten:<br>
+Projekt: "my-api"<br>
+Typ: "Express.js App"<br>
+Port: 3000 (Standard)<br>
+Datenbank: "PostgreSQL"<br>
+Deployment: "VPS/Server"<br>
+<br>
+# Dann:<br>
+kmuc-hoster publish</code>
+            </div>
+
+            <h3>Next.js App ohne Datenbank</h3>
+            <div class="code-block">
+                <code># Init mit folgenden Antworten:<br>
+Projekt: "my-nextjs-app"<br>
+Typ: "Next.js App"<br>
+Port: 3000 (Standard)<br>
+Datenbank: "Keine Datenbank"<br>
+Deployment: "Lokal"<br>
+<br>
+# Dann:<br>
+kmuc-hoster publish</code>
+            </div>
+
+            <h3>React Vite SPA mit Domain</h3>
+            <div class="code-block">
+                <code># Init mit folgenden Antworten:<br>
+Projekt: "my-react-app"<br>
+Typ: "React Vite SPA"<br>
+Port: 5173 (Standard)<br>
+Datenbank: "Keine Datenbank"<br>
+Deployment: "VPS/Server"<br>
+Domain: "example.com"<br>
+<br>
+# Lokal testen:<br>
+kmuc-hoster publish<br>
+<br>
+# Auf Server deployen:<br>
+./scripts/deploy.sh<br>
+./scripts/setup-domain.sh</code>
+            </div>
+
+            <h3>Statische HTML Website</h3>
+            <div class="code-block">
+                <code># Init mit folgenden Antworten:<br>
+Projekt: "landing-page"<br>
+Typ: "Statische Website"<br>
+Datenbank: "Keine Datenbank"<br>
+Deployment: "Lokal"<br>
+<br>
+# Dann:<br>
+kmuc-hoster publish</code>
+            </div>
+        </section>
+
+        <section id="troubleshooting" class="section">
+            <h2>🔧 Fehlerbehandlung</h2>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Problem</th>
+                            <th>Lösung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>Docker nicht gefunden</code></td>
+                            <td>Installiere Docker von <a href="https://docs.docker.com/get-docker/" style="color: var(--primary);">docs.docker.com/get-docker</a></td>
+                        </tr>
+                        <tr>
+                            <td><code>Port bereits in Verwendung</code></td>
+                            <td>Ändere den Port in docker-compose.yml oder stoppe den anderen Service</td>
+                        </tr>
+                        <tr>
+                            <td><code>Build fehlgeschlagen</code></td>
+                            <td>Führe <code>kmuc-hoster init</code> erneut aus um korrekte Dockerfiles zu generieren</td>
+                        </tr>
+                        <tr>
+                            <td><code>Container startet nicht</code></td>
+                            <td>Prüfe Logs mit <code>docker-compose logs</code> und .env Konfiguration</td>
+                        </tr>
+                        <tr>
+                            <td><code>.env Datei fehlt</code></td>
+                            <td><code>kmuc-hoster publish</code> erstellt sie automatisch aus .env.example</td>
+                        </tr>
+                        <tr>
+                            <td><code>Dockerfile Syntax-Fehler</code></td>
+                            <td>Führe <code>kmuc-hoster init</code> erneut aus - es wurde ein Fix released</td>
+                        </tr>
+                        <tr>
+                            <td><code>SSH-Verbindung fehlgeschlagen</code></td>
+                            <td>Prüfe SSH-Keys und Server-Zugriff mit <code>ssh user@server</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>SSL-Zertifikat Error</code></td>
+                            <td>Stelle sicher, dass die Domain auf die Server-IP zeigt (DNS A-Record)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Hilfreiche Docker Befehle</h3>
+            <div class="code-block">
+                <code># Container Status<br>
+docker-compose ps<br>
+<br>
+# Logs anzeigen<br>
+docker-compose logs -f<br>
+<br>
+# Container stoppen<br>
+docker-compose down<br>
+<br>
+# Container neu starten<br>
+docker-compose restart<br>
+<br>
+# Container neu bauen<br>
+docker-compose build --no-cache<br>
+<br>
+# In Container einloggen<br>
+docker-compose exec app sh<br>
+<br>
+# Alle Container & Images löschen<br>
+docker system prune -a</code>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>📚 Unterstützte Technologien</h2>
+
+            <h3>Projekt-Typen</h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>Express.js App</h4>
+                    <p>Node.js Backend mit Express Framework</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Next.js App</h4>
+                    <p>React Framework mit SSR/SSG</p>
+                </div>
+                <div class="feature-card">
+                    <h4>React Vite SPA</h4>
+                    <p>Single Page Application mit Vite</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Node.js Basic</h4>
+                    <p>Einfache Node.js Anwendung</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Statische Website</h4>
+                    <p>HTML/CSS/JS ohne Build-Prozess</p>
+                </div>
+            </div>
+
+            <h3>Datenbanken</h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>PostgreSQL</h4>
+                    <p>Relationale Datenbank mit Alpine Image</p>
+                </div>
+                <div class="feature-card">
+                    <h4>MongoDB</h4>
+                    <p>NoSQL Dokumenten-Datenbank</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Redis</h4>
+                    <p>In-Memory Cache & Message Broker</p>
+                </div>
+                <div class="feature-card">
+                    <h4>MySQL</h4>
+                    <p>Beliebte relationale Datenbank</p>
+                </div>
+            </div>
+
+            <h3>Deployment-Ziele</h3>
+            <ul class="option-list">
+                <li><strong>Lokal</strong> - Nur Docker Compose Setup für lokales Development</li>
+                <li><strong>VPS/Server</strong> - SSH-basiertes Deployment mit Scripts</li>
+                <li><strong>Cloud-Provider</strong> - Vorbereitet für AWS, Google Cloud, Azure</li>
+            </ul>
+        </section>
+
+        <section class="section">
+            <h2>📄 Lizenz & Nutzung</h2>
+
+            <div class="success">
+                <h4 style="margin-bottom: 0.5rem;">✅ Erlaubte Nutzung (KOSTENLOS):</h4>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                    <li>Private Projekte</li>
+                    <li>Hobby-Development</li>
+                    <li>Lernen & Bildung</li>
+                    <li>Open Source Projekte (nicht-kommerziell)</li>
+                    <li>Non-Profit Organisationen</li>
+                    <li>Akademische Forschung</li>
+                </ul>
+            </div>
+
+            <div class="warning">
+                <h4 style="margin-bottom: 0.5rem;">⚠️ NICHT erlaubt ohne kommerzielle Lizenz:</h4>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                    <li>Nutzung in kommerziellen Produkten oder Services</li>
+                    <li>Integration in bezahlte Software oder SaaS</li>
+                    <li>Nutzung durch Firmen für Geschäftsbetrieb</li>
+                    <li>Verkauf oder Sublizenzierung</li>
+                    <li>Revenue-generierende Anwendungen</li>
+                </ul>
+            </div>
+
+            <p style="margin-top: 1.5rem;">
+                Für kommerzielle Nutzung kontaktiere bitte die Maintainer für eine kommerzielle Lizenz.
+            </p>
+        </section>
+
+        <footer>
+            <p><strong>KMUC Hoster CLI</strong> v1.0.0</p>
+            <p style="margin-top: 0.5rem;">Made with ❤️ for developers</p>
+            <p style="margin-top: 0.5rem; color: var(--text-dim);">
+                MIT License - Private & Non-Commercial Use Only
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

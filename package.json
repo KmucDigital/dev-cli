@@ -1,0 +1,67 @@
+{
+  "name": "kmuc-hoster-ci",
+  "version": "1.0.0",
+  "description": "Professional Docker hosting made easy - Generate production-ready Dockerfiles, docker-compose, and deployment scripts for Node.js, Next.js, React, and static sites",
+  "keywords": [
+    "docker",
+    "cli",
+    "deployment",
+    "hosting",
+    "docker-compose",
+    "nginx",
+    "ssl",
+    "express",
+    "nextjs",
+    "react",
+    "vite",
+    "postgresql",
+    "mongodb",
+    "redis",
+    "mysql",
+    "reverse-proxy",
+    "letsencrypt",
+    "vps",
+    "devops",
+    "beginner-friendly"
+  ],
+  "homepage": "https://github.com/KmucDigital/hoster-cli#readme",
+  "bugs": {
+    "url": "https://github.com/KmucDigital/hoster-cli/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KmucDigital/hoster-cli.git"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "author": "KMUC Digital <contact@kmuc.digital>",
+  "contributors": [
+    "marius4lui"
+  ],
+  "type": "commonjs",
+  "main": "bin/cli.js",
+  "bin": {
+    "kmuc-hoster": "bin/cli.js"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "node bin/cli.js --version",
+    "prepublishOnly": "node bin/cli.js --version"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^12.1.0",
+    "ejs": "^3.1.10",
+    "inquirer": "^8.2.5",
+    "ora": "^5.4.1"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "preferGlobal": true
+}

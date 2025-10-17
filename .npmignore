@@ -1,0 +1,61 @@
+# Test files
+test/
+tests/
+*.test.js
+*.spec.js
+
+# Development
+.git/
+.github/
+.vscode/
+.idea/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# Node modules (will be installed by npm)
+node_modules/
+
+# Build artifacts (we ship source)
+dist/
+build/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Documentation source (ship compiled docs only)
+docs/
+
+# CI/CD
+.travis.yml
+.gitlab-ci.yml
+.circleci/
+
+# Git
+.gitignore
+.gitattributes
+
+# Editor
+*.swp
+*.swo
+*~
+
+# Coverage
+coverage/
+.nyc_output/
+
+# Examples and demos (optional - remove if you want to include them)
+examples/
+demo/
