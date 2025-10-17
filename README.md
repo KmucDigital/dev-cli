@@ -2,7 +2,7 @@
 
 **Professional Docker hosting made easy** - Generate production-ready Dockerfiles, docker-compose configurations, and deployment scripts for your Node.js, Next.js, React, and static web projects.
 
-[![npm version](https://img.shields.io/npm/v/kmuc-hoster-ci.svg)](https://www.npmjs.com/package/kmuc-hoster-ci)
+[![npm version](https://img.shields.io/npm/v/kmuc-hoster-cli.svg)](https://www.npmjs.com/package/kmuc-hoster-cli)
 [![License](https://img.shields.io/badge/license-MIT%20(Private%20%26%20Non--Commercial)-blue.svg)](LICENSE)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg)](https://nodejs.org/)
 
@@ -14,9 +14,9 @@
 - 🐳 **Optimized Dockerfiles** - Multi-stage builds, non-root users, health checks
 - 🗄️ **Database Support** - PostgreSQL, MongoDB, MySQL, Redis with automatic configuration
 - 🌐 **Domain & SSL** - Automated nginx reverse proxy and Let's Encrypt SSL setup
-- 📦 **One-Command Deploy** - \`kmuc-hoster publish\` builds and starts everything
+- 📦 **One-Command Deploy** - `kmuc-hoster publish` builds and starts everything
 - 📊 **Smart Logs** - Intelligent log filtering with error highlighting
-- 📖 **Built-in Documentation** - Interactive HTML documentation via \`kmuc-hoster help\`
+- 📖 **Built-in Documentation** - Interactive HTML documentation via `kmuc-hoster help`
 - 💾 **Progress Tracking** - Resume interrupted setups automatically
 
 ---
@@ -25,15 +25,15 @@
 
 ### Global Installation (Recommended)
 
-\`\`\`bash
-npm install -g kmuc-hoster-ci
-\`\`\`
+```bash
+npm install -g kmuc-hoster-cli
+```
 
 ### Verify Installation
 
-\`\`\`bash
+```bash
 kmuc-hoster --version
-\`\`\`
+```
 
 ---
 
@@ -41,10 +41,10 @@ kmuc-hoster --version
 
 ### 1. Initialize Your Project
 
-\`\`\`bash
+```bash
 cd my-project
 kmuc-hoster init
-\`\`\`
+```
 
 Answer the interactive questions:
 - Project name
@@ -55,9 +55,9 @@ Answer the interactive questions:
 
 ### 2. Deploy Locally
 
-\`\`\`bash
+```bash
 kmuc-hoster publish
-\`\`\`
+```
 
 That's it! Your application is now running in Docker containers.
 
@@ -65,43 +65,43 @@ That's it! Your application is now running in Docker containers.
 
 ## 📚 Available Commands
 
-### \`kmuc-hoster init\`
+### `kmuc-hoster init`
 
 Initialize a new project with complete Docker setup.
 
 **Creates:**
-- \`Dockerfile\` - Optimized for your framework
-- \`docker-compose.yml\` - With all services
-- \`.dockerignore\` - Excludes unnecessary files
-- \`.env.example\` - Environment variables template
-- \`README.md\` - Project documentation
-- \`scripts/\` - Deployment scripts (for VPS/Cloud)
+- `Dockerfile` - Optimized for your framework
+- `docker-compose.yml` - With all services
+- `.dockerignore` - Excludes unnecessary files
+- `.env.example` - Environment variables template
+- `README.md` - Project documentation
+- `scripts/` - Deployment scripts (for VPS/Cloud)
 
-\`\`\`bash
+```bash
 kmuc-hoster init
-\`\`\`
+```
 
 ---
 
-### \`kmuc-hoster publish\`
+### `kmuc-hoster publish`
 
 Build and start your Docker containers automatically.
 
 **What it does:**
 1. ✅ Validates Docker installation
-2. ✅ Creates \`.env\` from \`.env.example\` if needed
+2. ✅ Creates `.env` from `.env.example` if needed
 3. ✅ Validates Dockerfile syntax
 4. ✅ Builds Docker images
 5. ✅ Starts all containers
 6. ✅ Shows application URL
 
-\`\`\`bash
+```bash
 kmuc-hoster publish
-\`\`\`
+```
 
 ---
 
-### \`kmuc-hoster logs\`
+### `kmuc-hoster logs`
 
 View container logs with intelligent filtering.
 
@@ -111,33 +111,33 @@ View container logs with intelligent filtering.
 - 🟡 Highlights warnings in yellow
 - 🟢 Highlights success messages in green
 
-\`\`\`bash
+```bash
 # Smart filtered logs
 kmuc-hoster logs
 
 # Detailed logs with timestamps
 kmuc-hoster logs --detailed
-\`\`\`
+```
 
 ---
 
-### \`kmuc-hoster deploy\`
+### `kmuc-hoster deploy`
 
 Deploy your project to a VPS/Server.
 
-\`\`\`bash
+```bash
 kmuc-hoster deploy
-\`\`\`
+```
 
 ---
 
-### \`kmuc-hoster help\`
+### `kmuc-hoster help`
 
 Open the interactive documentation in your browser.
 
-\`\`\`bash
+```bash
 kmuc-hoster help
-\`\`\`
+```
 
 ---
 
@@ -157,10 +157,10 @@ kmuc-hoster help
 
 | Database | Image | Features |
 |----------|-------|----------|
-| **PostgreSQL** | \`postgres:16-alpine\` | Health checks, persistent volumes |
-| **MongoDB** | \`mongo:7-jammy\` | Automatic authentication setup |
-| **Redis** | \`redis:7-alpine\` | In-memory caching |
-| **MySQL** | \`mysql:8\` | Relational database |
+| **PostgreSQL** | `postgres:16-alpine` | Health checks, persistent volumes |
+| **MongoDB** | `mongo:7-jammy` | Automatic authentication setup |
+| **Redis** | `redis:7-alpine` | In-memory caching |
+| **MySQL** | `mysql:8` | Relational database |
 
 ### Deployment Targets
 
@@ -174,7 +174,7 @@ kmuc-hoster help
 
 ### Express.js API with PostgreSQL
 
-\`\`\`bash
+```bash
 kmuc-hoster init
 # Select: Express.js App
 # Select: PostgreSQL
@@ -182,11 +182,11 @@ kmuc-hoster init
 
 kmuc-hoster publish
 # Access at: http://localhost:3000
-\`\`\`
+```
 
 ### Next.js App with Domain & SSL
 
-\`\`\`bash
+```bash
 kmuc-hoster init
 # Select: Next.js App
 # Select: No database
@@ -199,18 +199,18 @@ kmuc-hoster publish
 # Production deployment
 ./scripts/deploy.sh
 ./scripts/setup-domain.sh
-\`\`\`
+```
 
 ### Static Website
 
-\`\`\`bash
+```bash
 kmuc-hoster init
 # Select: Static Website
 # Select: Local deployment
 
 kmuc-hoster publish
 # Access at: http://localhost:8080
-\`\`\`
+```
 
 ---
 
@@ -218,7 +218,7 @@ kmuc-hoster publish
 
 ### Docker Management
 
-\`\`\`bash
+```bash
 # View container status
 docker-compose ps
 
@@ -233,11 +233,11 @@ docker-compose down
 
 # Rebuild without cache
 docker-compose build --no-cache
-\`\`\`
+```
 
 ### Debugging
 
-\`\`\`bash
+```bash
 # Detailed logs
 kmuc-hoster logs --detailed
 
@@ -246,38 +246,38 @@ docker-compose exec app sh
 
 # View container resources
 docker stats
-\`\`\`
+```
 
 ---
 
 ## 🛠️ Troubleshooting
 
 ### Docker not found
-\`\`\`bash
+```bash
 # Install Docker
 # Visit: https://docs.docker.com/get-docker/
-\`\`\`
+```
 
 ### Port already in use
-\`\`\`bash
+```bash
 # Change port in docker-compose.yml
 # Or stop the conflicting service
-\`\`\`
+```
 
 ### Build failed
-\`\`\`bash
+```bash
 # Regenerate correct Dockerfiles
 kmuc-hoster init
-\`\`\`
+```
 
 ### Container won't start
-\`\`\`bash
+```bash
 # Check logs
 kmuc-hoster logs --detailed
 
 # Verify .env configuration
 cat .env
-\`\`\`
+```
 
 ---
 
@@ -310,18 +310,18 @@ Contributions are welcome! Please feel free to submit issues or pull requests.
 
 ### Development Setup
 
-\`\`\`bash
+```bash
 git clone https://github.com/KmucDigital/hoster-cli.git
 cd hoster-cli
 npm install
 npm link
-\`\`\`
+```
 
 ---
 
 ## 📞 Support
 
-- 📖 **Documentation**: Run \`kmuc-hoster help\`
+- 📖 **Documentation**: Run `kmuc-hoster help`
 - 🐛 **Bug Reports**: [GitHub Issues](https://github.com/KmucDigital/hoster-cli/issues)
 - 💬 **Discussions**: [GitHub Discussions](https://github.com/KmucDigital/hoster-cli/discussions)
 

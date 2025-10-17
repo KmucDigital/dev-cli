@@ -1,5 +1,5 @@
 {
-  "name": "kmuc-hoster-ci",
+  "name": "kmuc-hoster-cli",
   "version": "1.0.0",
   "description": "Professional Docker hosting made easy - Generate production-ready Dockerfiles, docker-compose, and deployment scripts for Node.js, Next.js, React, and static sites",
   "keywords": [
