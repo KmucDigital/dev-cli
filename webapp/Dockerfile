@@ -6,11 +6,13 @@ FROM base AS deps
 WORKDIR /app
 
 # Copy package files
-COPY package*.json ./
+COPY package.json ./
+COPY pnpm-lock.yaml* ./
 
-# Install production dependencies only
-RUN npm ci --only=production && \
-    npm cache clean --force
+# Install pnpm and production dependencies
+RUN npm install -g pnpm@10.15.1 && \
+    pnpm install --prod --frozen-lockfile && \
+    pnpm store prune
 
 # Stage 2: Build
 FROM base AS builder
