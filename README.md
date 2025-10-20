@@ -364,7 +364,8 @@ npm link
 
 ## 📞 Support
 
-- 📖 **Documentation**: Run `kmuc help`
+- 🌐 **Website**: [cli.kmuc.online](https://links.kmuc.online/cli)
+- 📖 **Documentation**: Run `kmuc help` or visit [cli.kmuc.online/dokumentation](https://cli.kmuc.online/dokumentation)
 - 🐛 **Bug Reports**: [GitHub Issues](https://github.com/KmucDigital/dev-cli/issues)
 - 💬 **Discussions**: [GitHub Discussions](https://github.com/KmucDigital/dev-cli/discussions)
 
