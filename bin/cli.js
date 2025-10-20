@@ -22,7 +22,7 @@ const program = new Command();
 program
   .name('kmuc')
   .description('Complete development CLI for modern web projects - Your toolkit from init to deploy')
-  .version('2.2.1');
+  .version('2.2.2');
 
 program
   .command('init')
