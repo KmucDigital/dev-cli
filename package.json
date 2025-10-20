@@ -1,6 +1,6 @@
 {
   "name": "kmuc-dev-cli",
-  "version": "2.1.2",
+  "version": "2.2.1",
   "description": "Complete development CLI for modern web projects - From init to deploy, Docker, CI/CD, monitoring, and more",
   "keywords": [
     "development",
