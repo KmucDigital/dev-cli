@@ -1,282 +1,327 @@
-# 🚀 KMUC Hoster CLI
+# 🚀 KMUC Dev CLI
 
-**Professional Docker hosting made easy** - Generate production-ready Dockerfiles, docker-compose configurations, and deployment scripts for your Node.js, Next.js, React, and static web projects.
+**Your complete development toolkit in one CLI** - Streamline your entire workflow from project init to production deploy with Docker, CI/CD, monitoring, and more.
 
-[![npm version](https://img.shields.io/npm/v/kmuc-hoster-cli.svg)](https://www.npmjs.com/package/kmuc-hoster-cli)
+[![npm version](https://img.shields.io/npm/v/kmuc-dev-cli.svg)](https://www.npmjs.com/package/kmuc-dev-cli)
 [![License](https://img.shields.io/badge/license-MIT%20(Private%20%26%20Non--Commercial)-blue.svg)](LICENSE)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg)](https://nodejs.org/)
 
 ---
 
-## ✨ Features
+## ✨ Why KMUC Dev CLI?
 
-- 🎯 **Interactive Setup** - Answer a few questions and get a complete Docker configuration
-- 🐳 **Optimized Dockerfiles** - Multi-stage builds, non-root users, health checks
-- 🗄️ **Database Support** - PostgreSQL, MongoDB, MySQL, Redis with automatic configuration
-- 🌐 **Domain & SSL** - Automated nginx reverse proxy and Let's Encrypt SSL setup
-- 📦 **One-Command Deploy** - `kmuc-hoster publish` builds and starts everything
-- 📊 **Smart Logs** - Intelligent log filtering with error highlighting
-- 📖 **Built-in Documentation** - Interactive HTML documentation via `kmuc-hoster help`
-- 💾 **Progress Tracking** - Resume interrupted setups automatically
+Stop juggling multiple tools. One CLI for everything:
+
+- 🎯 **Project Setup** - Initialize production-ready Docker projects in seconds
+- 🐳 **Container Management** - Status dashboard, logs, updates, cleanup
+- 🗄️ **Database Tools** - Direct DB access, backups, migrations
+- 📊 **Monitoring** - Health checks, resource usage, live dashboards
+- 🔄 **CI/CD** - Auto-generate GitHub Actions, GitLab CI configs
+- 🌐 **SSL & Domains** - Automated Let's Encrypt setup and renewal
+- 🛠️ **Dev Mode** - Hot-reload, debugging, instant feedback
 
 ---
 
 ## 📦 Installation
 
-### Global Installation (Recommended)
-
 ```bash
-npm install -g kmuc-hoster-cli
+npm install -g kmuc-dev-cli
 ```
 
-### Verify Installation
+Verify installation:
 
 ```bash
-kmuc-hoster --version
+kmuc --version
 ```
 
 ---
 
 ## 🚀 Quick Start
 
-### 1. Initialize Your Project
-
 ```bash
+# 1. Initialize your project
 cd my-project
-kmuc-hoster init
+kmuc init
+
+# 2. Start everything
+kmuc publish
+
+# 3. Monitor status
+kmuc status --watch
 ```
 
-Answer the interactive questions:
-- Project name
-- Project type (Express, Next.js, React, etc.)
-- Port configuration
-- Database selection
-- Deployment target
-
-### 2. Deploy Locally
-
-```bash
-kmuc-hoster publish
-```
-
-That's it! Your application is now running in Docker containers.
+That's it! Your app is running in Docker with all services configured.
 
 ---
 
-## 📚 Available Commands
+## 🆕 What's New in v2.1.0
 
-### `kmuc-hoster init`
-
-Initialize a new project with complete Docker setup.
-
-**Creates:**
-- `Dockerfile` - Optimized for your framework
-- `docker-compose.yml` - With all services
-- `.dockerignore` - Excludes unnecessary files
-- `.env.example` - Environment variables template
-- `README.md` - Project documentation
-- `scripts/` - Deployment scripts (for VPS/Cloud)
-
-```bash
-kmuc-hoster init
-```
+- 🛠️ **kmuc dev** - Development mode with hot-reload and debug ports
+- 🗄️ **kmuc db:connect** - Auto-connect to any database (PostgreSQL, MongoDB, MySQL, Redis)
+- 💾 **kmuc backup** - Complete backup/restore system for containers and databases
+- 🏥 **kmuc health** - Comprehensive health checks for your entire stack
+- 🔒 **kmuc ssl:*** - SSL certificate management (status, renew, auto-renewal)
+- ⚙️ **kmuc ci:github** & **ci:gitlab** - Generate CI/CD workflows
+- 📊 Enhanced **kmuc status** - Real-time container monitoring
+- 🧹 Improved **kmuc clean** - Interactive cleanup wizard
 
 ---
 
-### `kmuc-hoster publish`
+## 📚 Core Commands
 
-Build and start your Docker containers automatically.
-
-**What it does:**
-1. ✅ Validates Docker installation
-2. ✅ Creates `.env` from `.env.example` if needed
-3. ✅ Validates Dockerfile syntax
-4. ✅ Builds Docker images
-5. ✅ Starts all containers
-6. ✅ Shows application URL
+### Project Lifecycle
 
 ```bash
-kmuc-hoster publish
+kmuc init           # Interactive project setup
+kmuc publish        # Build & deploy everything
+kmuc dev            # Start development mode
+kmuc status         # Container status dashboard
+kmuc logs           # Intelligent log viewer
+kmuc health         # Health monitoring
 ```
 
----
-
-### `kmuc-hoster logs`
-
-View container logs with intelligent filtering.
-
-**Features:**
-- 🎯 Auto-detects main service
-- 🔴 Highlights errors in red
-- 🟡 Highlights warnings in yellow
-- 🟢 Highlights success messages in green
+### Container Management
 
 ```bash
-# Smart filtered logs
-kmuc-hoster logs
-
-# Detailed logs with timestamps
-kmuc-hoster logs --detailed
+kmuc update         # Update Docker images
+kmuc clean          # Clean unused resources
+kmuc restart        # Restart services
+kmuc stop           # Stop all containers
 ```
 
----
-
-### `kmuc-hoster deploy`
-
-Deploy your project to a VPS/Server.
+### Database Tools
 
 ```bash
-kmuc-hoster deploy
+kmuc db:connect     # Auto-connect to database
+kmuc backup         # Create full backup
+kmuc backup:restore # Restore from backup
 ```
 
----
-
-### `kmuc-hoster help`
-
-Open the interactive documentation in your browser.
+### CI/CD & Deploy
 
 ```bash
-kmuc-hoster help
+kmuc ci:github      # Generate GitHub Actions
+kmuc deploy         # Deploy to server
+kmuc ssl:renew      # Renew SSL certificates
+```
+
+### Utilities
+
+```bash
+kmuc help           # Interactive documentation
+kmuc clean          # Clean Docker resources
 ```
 
 ---
 
 ## 🎨 Supported Technologies
 
-### Project Types
+### Frameworks & Languages
 
-| Type | Description |
-|------|-------------|
-| **Express.js** | Node.js backend with Express framework |
-| **Next.js** | React framework with SSR/SSG |
-| **React Vite** | Single Page Application with Vite |
-| **Node.js Basic** | Simple Node.js application |
-| **Static Website** | HTML/CSS/JS without build process |
+| Type | Frameworks |
+|------|-----------|
+| **JavaScript** | Express.js, Next.js, React (Vite), Node.js |
+| **Python** | FastAPI, Django, Flask |
+| **Static** | HTML/CSS/JS with nginx |
 
 ### Databases
 
-| Database | Image | Features |
-|----------|-------|----------|
-| **PostgreSQL** | `postgres:16-alpine` | Health checks, persistent volumes |
-| **MongoDB** | `mongo:7-jammy` | Automatic authentication setup |
-| **Redis** | `redis:7-alpine` | In-memory caching |
-| **MySQL** | `mysql:8` | Relational database |
+| Database | Version | Features |
+|----------|---------|----------|
+| **PostgreSQL** | 16 Alpine | Health checks, auto-backup |
+| **MongoDB** | 7 | Authentication, replication-ready |
+| **Redis** | 7 Alpine | Caching, pub/sub |
+| **MySQL** | 8 | Full-featured relational DB |
 
-### Deployment Targets
+### Infrastructure
 
-- **Local** - Docker Compose for development
-- **VPS/Server** - SSH-based deployment with scripts
-- **Cloud** - Ready for AWS, Google Cloud, Azure
+- Docker & Docker Compose
+- nginx Reverse Proxy
+- Let's Encrypt SSL/TLS
+- GitHub Actions & GitLab CI
+- VPS & Cloud deployment
 
 ---
 
-## 💡 Usage Examples
+## 💡 Feature Highlights
 
-### Express.js API with PostgreSQL
+### 📊 Status Dashboard
 
 ```bash
-kmuc-hoster init
+kmuc status --watch
+```
+
+Real-time container monitoring with:
+- Live CPU & Memory usage
+- Health status indicators
+- Port mappings
+- Auto-refresh every 2 seconds
+
+### 🔄 Smart Updates
+
+```bash
+kmuc update
+```
+
+- Checks for available image updates
+- Creates backup before updating
+- Rolling updates (zero downtime)
+- Automatic health verification
+
+### 🧹 Intelligent Cleanup
+
+```bash
+kmuc clean
+```
+
+Interactive cleanup wizard:
+- Stopped containers
+- Dangling images
+- Unused volumes
+- Build cache
+- Shows space freed
+
+### 🗄️ Database Access
+
+```bash
+kmuc db:connect
+```
+
+Automatically:
+- Detects your database type
+- Opens the right client (psql, mongo, mysql, redis-cli)
+- Passes credentials from .env
+
+### 🛠️ Development Mode
+
+```bash
+kmuc dev
+```
+
+- Volume mounts for hot-reload
+- Debug ports enabled
+- Development environment
+- Live log streaming
+
+---
+
+## 📖 Usage Examples
+
+### Full-Stack Node.js App with PostgreSQL
+
+```bash
+kmuc init
 # Select: Express.js App
 # Select: PostgreSQL
-# Select: VPS/Server deployment
+# Select: VPS deployment
 
-kmuc-hoster publish
+kmuc publish
 # Access at: http://localhost:3000
+
+kmuc db:connect
+# Opens psql with your credentials
+
+kmuc backup
+# Creates timestamped backup
+
+kmuc ci:github
+# Generates .github/workflows/deploy.yml
 ```
 
-### Next.js App with Domain & SSL
+### Python FastAPI with MongoDB
 
 ```bash
-kmuc-hoster init
-# Select: Next.js App
-# Select: No database
-# Select: VPS/Server
-# Enter: example.com
+kmuc init
+# Select: Python FastAPI
+# Select: MongoDB  
+# Select: Local development
 
-# Local testing
-kmuc-hoster publish
+kmuc dev
+# Starts with hot-reload
 
-# Production deployment
-./scripts/deploy.sh
-./scripts/setup-domain.sh
+kmuc logs --detailed
+# Watch all logs with timestamps
 ```
 
-### Static Website
+### Static Site with SSL
 
 ```bash
-kmuc-hoster init
+kmuc init
 # Select: Static Website
-# Select: Local deployment
+# Select: VPS deployment
+# Enter: yourdomain.com
 
-kmuc-hoster publish
-# Access at: http://localhost:8080
+kmuc publish
+# Deploys locally first
+
+./scripts/setup-domain.sh
+# Sets up nginx + Let's Encrypt
+
+kmuc ssl:status
+# Check SSL expiry
 ```
 
 ---
 
-## 🔧 Common Commands
+## 🔧 Advanced Usage
 
-### Docker Management
+### Container Status with Live Updates
 
 ```bash
-# View container status
-docker-compose ps
-
-# View logs
-kmuc-hoster logs
-
-# Restart containers
-docker-compose restart
-
-# Stop containers
-docker-compose down
-
-# Rebuild without cache
-docker-compose build --no-cache
+kmuc status --watch
 ```
 
-### Debugging
+### Detailed Logs from All Services
 
 ```bash
-# Detailed logs
-kmuc-hoster logs --detailed
+kmuc logs --detailed
+```
 
-# Enter container shell
-docker-compose exec app sh
+### Force Update All Images
 
-# View container resources
-docker stats
+```bash
+kmuc update --force
+```
+
+### Deep Clean Everything
+
+```bash
+kmuc clean --all
+```
+
+### Development with Debug Ports
+
+```bash
+kmuc dev --debug
 ```
 
 ---
 
-## 🛠️ Troubleshooting
+## 🛠️ Common Workflows
 
-### Docker not found
+### Daily Development
+
 ```bash
-# Install Docker
-# Visit: https://docs.docker.com/get-docker/
+kmuc dev                    # Start dev environment
+kmuc logs                   # Watch logs
+kmuc status                 # Check status
 ```
 
-### Port already in use
+### Before Deployment
+
 ```bash
-# Change port in docker-compose.yml
-# Or stop the conflicting service
+kmuc health                 # Verify all healthy
+kmuc backup                 # Create backup
+kmuc update                 # Get latest images
+kmuc publish                # Deploy
 ```
 
-### Build failed
-```bash
-# Regenerate correct Dockerfiles
-kmuc-hoster init
-```
+### Maintenance
 
-### Container won't start
 ```bash
-# Check logs
-kmuc-hoster logs --detailed
-
-# Verify .env configuration
-cat .env
+kmuc ssl:renew              # Renew certificates
+kmuc clean                  # Free up space
+kmuc status                 # Verify everything running
 ```
 
 ---
@@ -285,20 +330,20 @@ cat .env
 
 **MIT License - Private & Non-Commercial Use Only**
 
-### ✅ Allowed (FREE):
+### ✅ Free for:
 - Personal projects
 - Learning & education
-- Open source projects (non-commercial)
+- Open source (non-commercial)
 - Non-profit organizations
 - Academic research
 
-### ⚠️ NOT Allowed without commercial license:
+### ⚠️ Requires commercial license for:
 - Commercial products or services
-- Paid software or SaaS platforms
+- Paid software or SaaS
 - Revenue-generating applications
 - Business operations
 
-For commercial use, please contact the maintainers for a commercial license.
+For commercial licensing, contact the maintainers.
 
 See [LICENSE](LICENSE) for full details.
 
@@ -306,13 +351,11 @@ See [LICENSE](LICENSE) for full details.
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit issues or pull requests.
-
-### Development Setup
+Contributions welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ```bash
-git clone https://github.com/KmucDigital/hoster-cli.git
-cd hoster-cli
+git clone https://github.com/KmucDigital/dev-cli.git
+cd dev-cli
 npm install
 npm link
 ```
@@ -321,21 +364,21 @@ npm link
 
 ## 📞 Support
 
-- 📖 **Documentation**: Run `kmuc-hoster help`
-- 🐛 **Bug Reports**: [GitHub Issues](https://github.com/KmucDigital/hoster-cli/issues)
-- 💬 **Discussions**: [GitHub Discussions](https://github.com/KmucDigital/hoster-cli/discussions)
+- 📖 **Documentation**: Run `kmuc help`
+- 🐛 **Bug Reports**: [GitHub Issues](https://github.com/KmucDigital/dev-cli/issues)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/KmucDigital/dev-cli/discussions)
 
 ---
 
 ## 🌟 Show Your Support
 
-If this tool helped you, please consider:
-- ⭐ Starring the repository
-- 🐦 Sharing with your network
-- 🐛 Reporting bugs or requesting features
+- ⭐ Star the repository
+- 🐦 Share with your network
+- 🐛 Report bugs or request features
+- 📝 Contribute improvements
 
 ---
 
 **Made with ❤️ by KMUC Digital**
 
-*Simplifying Docker hosting for developers*
+*Modern development, simplified - One CLI to rule them all*

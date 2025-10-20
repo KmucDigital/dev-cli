@@ -15,8 +15,10 @@ function generateDockerCompose(answers) {
       - "${port}"
 `;
   } else {
+    // Static sites and React Vite use nginx which listens on port 80 internally
+    const internalPort = (projectType === 'static' || projectType === 'react-vite') ? 80 : port;
     compose += `    ports:
-      - "${port}:${port}"
+      - "${port}:${internalPort}"
 `;
   }
 

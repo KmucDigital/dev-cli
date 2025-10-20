@@ -130,6 +130,15 @@ README.md
 *.log`;
       await fs.writeFile(path.join(projectPath, '.dockerignore'), dockerignore);
       spinner.succeed('.dockerignore erstellt');
+      await saveProgress(answers, 'kmucignore', projectPath);
+    }
+
+    // .kmucignore erstellen
+    if (!resumeFromStep || ['create-directory', 'dockerfile', 'docker-compose', 'dockerignore', 'kmucignore'].includes(resumeFromStep)) {
+      const spinner = ora('Erstelle .kmucignore...').start();
+      const kmucignore = generateKmucIgnore(answers);
+      await fs.writeFile(path.join(projectPath, '.kmucignore'), kmucignore);
+      spinner.succeed('.kmucignore erstellt');
       await saveProgress(answers, 'deploy-scripts', projectPath);
     }
 
@@ -144,6 +153,35 @@ README.md
 
         await generateDeployScripts(answers, projectPath);
         spinner.succeed('Deploy-Scripts erstellt');
+
+        // Direkt deployen wenn gewünscht
+        if (answers.deploymentMode === 'direct' && answers.deploymentTarget === 'vps') {
+          console.log();
+          console.log(chalk.cyan.bold('🚀 Starte direktes Deployment...\n'));
+
+          const deploySpinner = ora('Verbinde mit Server und deploye...').start();
+          try {
+            const { execSync } = require('child_process');
+
+            // Use relative path for better compatibility
+            const scriptPath = './scripts/deploy.sh';
+
+            // Deploy script ausführen (Windows-kompatibel)
+            execSync(`bash "${scriptPath}"`, {
+              stdio: 'inherit',
+              cwd: projectPath,
+              shell: true
+            });
+
+            deploySpinner.succeed('Deployment abgeschlossen!');
+          } catch (error) {
+            deploySpinner.fail('Deployment fehlgeschlagen');
+            console.log(chalk.red('\n❌ Deployment Error:'), error.message);
+            console.log(chalk.yellow('\n💡 Du kannst das Deployment manuell durchführen:'));
+            console.log(chalk.gray('   bash ./scripts/deploy.sh\n'));
+          }
+        }
+
         await saveProgress(answers, 'env-file', projectPath);
       }
     } else {
@@ -179,6 +217,7 @@ README.md
     console.log(chalk.gray('  ✓ Dockerfile'));
     console.log(chalk.gray('  ✓ docker-compose.yml'));
     console.log(chalk.gray('  ✓ .dockerignore'));
+    console.log(chalk.gray('  ✓ .kmucignore'));
     console.log(chalk.gray('  ✓ .env.example'));
     console.log(chalk.gray('  ✓ README.md'));
     if (answers.deploymentTarget === 'vps' || answers.deploymentTarget === 'cloud') {
@@ -258,6 +297,98 @@ function generateEnvExample(answers) {
   }
 
   return env;
+}
+
+function generateKmucIgnore(answers) {
+  const { projectType } = answers;
+
+  let ignore = `# KMUC Deploy Ignore File
+# Files and directories listed here will NOT be uploaded to the server
+
+# Dependencies
+node_modules/
+vendor/
+__pycache__/
+*.pyc
+
+# Environment & Secrets
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+secrets/
+
+# Version Control
+.git/
+.gitignore
+.gitattributes
+
+# Build Artifacts
+dist/
+build/
+out/
+.next/
+.cache/
+coverage/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE & Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Test Files
+test/
+tests/
+__tests__/
+*.test.js
+*.spec.js
+
+# Documentation (optional - uncomment if needed)
+# docs/
+# README.md
+
+# Previous deployments
+*.tar.gz
+*.zip
+
+# Development only files
+.prettierrc
+.eslintrc*
+tsconfig.json
+jest.config.js
+`;
+
+  // Project-specific additions
+  if (projectType === 'nextjs') {
+    ignore += `
+# Next.js specific
+.next/
+.vercel/
+`;
+  }
+
+  if (projectType === 'react-vite') {
+    ignore += `
+# Vite specific
+.vite/
+`;
+  }
+
+  return ignore;
 }
 
 function generateProjectReadme(answers) {

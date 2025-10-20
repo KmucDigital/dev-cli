@@ -103,6 +103,16 @@ const projectQuestions = [
 
 const vpsQuestions = [
   {
+    type: 'list',
+    name: 'deploymentMode',
+    message: '🚀 Deployment Modus:',
+    choices: [
+      { name: 'Script generieren (manuell ausführen)', value: 'script' },
+      { name: 'Direkt deployen (automatisch via SSH)', value: 'direct' }
+    ],
+    default: 'script'
+  },
+  {
     type: 'input',
     name: 'serverIP',
     message: 'Server IP-Adresse:',
@@ -122,6 +132,13 @@ const vpsQuestions = [
     name: 'serverPort',
     message: 'SSH Port:',
     default: '22'
+  },
+  {
+    type: 'password',
+    name: 'serverPassword',
+    message: 'SSH Passwort (optional, falls kein SSH-Key):',
+    when: (answers) => answers.deploymentMode === 'direct',
+    mask: '*'
   }
 ];
 

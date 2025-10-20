@@ -44,7 +44,9 @@ function generateVPSDeployScript(answers) {
   return `#!/bin/bash
 # VPS Deploy Script für ${projectName}
 
+# Exit on error, but allow tar warnings
 set -e
+set -o pipefail
 
 echo "🚀 Deploying ${projectName} zu VPS..."
 
@@ -54,42 +56,99 @@ SERVER_USER="${serverUser || 'root'}"
 SERVER_PORT="${serverPort}"
 APP_DIR="/opt/${projectName}"
 
+# SSH Options for faster connection
+SSH_OPTS="-o Compression=yes -o StrictHostKeyChecking=accept-new -o ConnectTimeout=30"
+
 # Farben für Output
 GREEN='\\033[0;32m'
 RED='\\033[0;31m'
 NC='\\033[0m' # No Color
 
 echo "📦 Erstelle Deployment-Archiv..."
-tar -czf ${projectName}.tar.gz \\
-  --exclude='node_modules' \\
-  --exclude='.git' \\
-  --exclude='*.log' \\
-  --exclude='.env' \\
-  .
+
+# Build exclude list from .kmucignore if it exists
+EXCLUDE_ARGS=""
+if [ -f .kmucignore ]; then
+  while IFS= read -r pattern || [ -n "\$pattern" ]; do
+    # Skip empty lines and comments
+    [[ -z "\$pattern" || "\$pattern" =~ ^# ]] && continue
+    EXCLUDE_ARGS="\$EXCLUDE_ARGS --exclude='\$pattern'"
+  done < .kmucignore
+  echo "📋 Nutze .kmucignore für Ausschlüsse"
+else
+  # Default excludes if no .kmucignore exists
+  EXCLUDE_ARGS="--exclude='node_modules' --exclude='.git' --exclude='*.log' --exclude='.env' --exclude='dist' --exclude='build' --exclude='.next' --exclude='coverage' --exclude='.cache' --exclude='*.tar.gz'"
+fi
+
+# Create tar archive (ignore warnings about changed files)
+eval "tar -czf ${projectName}.tar.gz \\
+  \$EXCLUDE_ARGS \\
+  --warning=no-file-changed \\
+  --warning=no-file-removed \\
+  . 2>/dev/null" || {
+    # If tar fails with exit code 1 (just warnings), check if archive was created
+    if [ -f ${projectName}.tar.gz ]; then
+      echo "⚠️  Archiv mit Warnungen erstellt"
+    else
+      echo "❌ Fehler beim Erstellen des Archivs"
+      exit 1
+    fi
+  }
+
+# Verify archive was created
+if [ ! -f ${projectName}.tar.gz ]; then
+  echo "❌ Archiv wurde nicht erstellt!"
+  exit 1
+fi
 
 echo "📤 Übertrage Dateien zum Server..."
-scp -P \${SERVER_PORT} ${projectName}.tar.gz \${SERVER_USER}@\${SERVER_IP}:/tmp/
+
+# Show archive size
+ARCHIVE_SIZE=\$(du -h ${projectName}.tar.gz | cut -f1)
+echo "   Archiv-Größe: \$ARCHIVE_SIZE"
+
+# Check if SSH key is configured
+if ssh -p \${SERVER_PORT} -o BatchMode=yes -o ConnectTimeout=5 \${SERVER_USER}@\${SERVER_IP} "echo 'SSH Key OK'" 2>/dev/null; then
+  echo "   ✓ SSH-Key Authentifizierung"
+  SCP_CMD="scp -P \${SERVER_PORT} \${SSH_OPTS}"
+  SSH_CMD="ssh -p \${SERVER_PORT} \${SSH_OPTS}"
+else
+  echo "   ⚠️  Keine SSH-Key Authentifizierung - Passwort erforderlich"
+  echo ""
+  echo "💡 Tipp: Richte SSH-Key ein für schnelleres Deployment ohne Passwort:"
+  echo "   ssh-keygen -t ed25519"
+  echo "   ssh-copy-id -p \${SERVER_PORT} \${SERVER_USER}@\${SERVER_IP}"
+  echo ""
+  SCP_CMD="scp -P \${SERVER_PORT}"
+  SSH_CMD="ssh -p \${SERVER_PORT}"
+fi
+
+# Transfer files
+\${SCP_CMD} ${projectName}.tar.gz \${SERVER_USER}@\${SERVER_IP}:/tmp/ || {
+  echo "❌ Dateiübertragung fehlgeschlagen!"
+  exit 1
+}
 
 echo "🔧 Deploye auf Server..."
-ssh -p \${SERVER_PORT} \${SERVER_USER}@\${SERVER_IP} << 'ENDSSH'
+\${SSH_CMD} \${SERVER_USER}@\${SERVER_IP} << ENDSSH
   set -e
 
   # App-Verzeichnis erstellen
-  mkdir -p ${APP_DIR}
+  mkdir -p \${APP_DIR}
 
   # Backup erstellen (falls existiert)
-  if [ -d "${APP_DIR}/current" ]; then
+  if [ -d "\${APP_DIR}/current" ]; then
     echo "💾 Erstelle Backup..."
-    cp -r ${APP_DIR}/current ${APP_DIR}/backup-$(date +%Y%m%d-%H%M%S)
+    cp -r \${APP_DIR}/current \${APP_DIR}/backup-\$(date +%Y%m%d-%H%M%S)
   fi
 
   # Entpacke neue Version
   echo "📦 Entpacke neue Version..."
-  mkdir -p ${APP_DIR}/current
-  tar -xzf /tmp/${projectName}.tar.gz -C ${APP_DIR}/current
+  mkdir -p \${APP_DIR}/current
+  tar -xzf /tmp/${projectName}.tar.gz -C \${APP_DIR}/current
 
   # Wechsle zum App-Verzeichnis
-  cd ${APP_DIR}/current
+  cd \${APP_DIR}/current
 
   # Docker installieren (falls nicht vorhanden)
   if ! command -v docker &> /dev/null; then
@@ -128,10 +187,15 @@ ssh -p \${SERVER_PORT} \${SERVER_USER}@\${SERVER_IP} << 'ENDSSH'
   docker-compose ps
 ENDSSH
 
+echo ""
 echo "\${GREEN}✅ Deployment erfolgreich!\${NC}"
 echo ""
 echo "🌐 Deine App sollte jetzt erreichbar sein"
-echo "📊 Logs anzeigen: ssh -p \${SERVER_PORT} \${SERVER_USER}@\${SERVER_IP} 'cd ${APP_DIR}/current && docker-compose logs -f'"
+echo ""
+echo "📊 Nützliche Befehle:"
+echo "   Logs:    ssh -p \${SERVER_PORT} \${SERVER_USER}@\${SERVER_IP} 'cd \${APP_DIR}/current && docker-compose logs -f'"
+echo "   Status:  ssh -p \${SERVER_PORT} \${SERVER_USER}@\${SERVER_IP} 'cd \${APP_DIR}/current && docker-compose ps'"
+echo "   Restart: ssh -p \${SERVER_PORT} \${SERVER_USER}@\${SERVER_IP} 'cd \${APP_DIR}/current && docker-compose restart'"
 `;
 }
 

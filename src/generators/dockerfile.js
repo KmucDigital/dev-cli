@@ -119,9 +119,9 @@ FROM nginx:alpine
 # Nginx config kopieren
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Custom nginx config
+# Custom nginx config (nginx always uses port 80 internally)
 RUN echo 'server { \\
-    listen ${port}; \\
+    listen 80; \\
     location / { \\
         root /usr/share/nginx/html; \\
         index index.html index.htm; \\
@@ -129,7 +129,7 @@ RUN echo 'server { \\
     } \\
 }' > /etc/nginx/conf.d/default.conf
 
-EXPOSE ${port}
+EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
 `;

@@ -1,36 +1,45 @@
 {
-  "name": "kmuc-hoster-cli",
-  "version": "1.0.0",
-  "description": "Professional Docker hosting made easy - Generate production-ready Dockerfiles, docker-compose, and deployment scripts for Node.js, Next.js, React, and static sites",
+  "name": "kmuc-dev-cli",
+  "version": "2.1.2",
+  "description": "Complete development CLI for modern web projects - From init to deploy, Docker, CI/CD, monitoring, and more",
   "keywords": [
-    "docker",
+    "development",
+    "devtools",
     "cli",
+    "docker",
+    "docker-compose",
+    "workflow",
+    "automation",
     "deployment",
     "hosting",
-    "docker-compose",
     "nginx",
     "ssl",
     "express",
     "nextjs",
     "react",
     "vite",
+    "python",
+    "fastapi",
+    "django",
     "postgresql",
     "mongodb",
     "redis",
     "mysql",
     "reverse-proxy",
     "letsencrypt",
+    "ci-cd",
+    "github-actions",
     "vps",
     "devops",
     "beginner-friendly"
   ],
-  "homepage": "https://github.com/KmucDigital/hoster-cli#readme",
+  "homepage": "https://github.com/KmucDigital/dev-cli#readme",
   "bugs": {
-    "url": "https://github.com/KmucDigital/hoster-cli/issues"
+    "url": "https://github.com/KmucDigital/dev-cli/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/KmucDigital/hoster-cli.git"
+    "url": "git+https://github.com/KmucDigital/dev-cli.git"
   },
   "license": "SEE LICENSE IN LICENSE",
   "author": "KMUC Digital <contact@kmuc.digital>",
@@ -40,7 +49,7 @@
   "type": "commonjs",
   "main": "bin/cli.js",
   "bin": {
-    "kmuc-hoster": "bin/cli.js"
+    "kmuc": "bin/cli.js"
   },
   "files": [
     "bin/",
@@ -53,9 +62,11 @@
     "prepublishOnly": "node bin/cli.js --version"
   },
   "dependencies": {
+    "adm-zip": "^0.5.10",
     "chalk": "^4.1.2",
     "commander": "^12.1.0",
     "ejs": "^3.1.10",
+    "form-data": "^4.0.0",
     "inquirer": "^8.2.5",
     "ora": "^5.4.1"
   },
