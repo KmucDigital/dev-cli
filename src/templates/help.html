@@ -152,6 +152,48 @@
             border-top: 1px solid var(--border);
             margin-top: 3rem;
         }
+
+        .search-container {
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 2rem;
+            color: var(--text);
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .search-box:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .search-box::placeholder {
+            color: var(--text-dim);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .highlight {
+            background-color: rgba(236, 72, 153, 0.3);
+            padding: 0.1rem 0.2rem;
+            border-radius: 0.2rem;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-dim);
+        }
     </style>
 </head>
 <body>
@@ -163,37 +205,22 @@
                 Complete development toolkit from init to deploy
             </p>
             <span class="version-badge">v2.1.0</span>
+
+            <div class="search-container">
+                <input
+                    type="text"
+                    id="searchBox"
+                    class="search-box"
+                    placeholder="🔍 Suche nach Befehlen, Features oder Technologien..."
+                    autocomplete="off"
+                />
+            </div>
         </header>
 
-        <section class="section">
-            <h2>🆕 What's New in v2.1.0</h2>
-            <div class="command-grid">
-                <div class="command-card">
-                    <h4>🛠️ kmuc dev <span class="new-badge">NEW</span></h4>
-                    <p>Development mode mit hot-reload, debug ports und live logs</p>
-                </div>
-                <div class="command-card">
-                    <h4>🗄️ kmuc db:connect <span class="new-badge">NEW</span></h4>
-                    <p>Auto-connect zu PostgreSQL, MongoDB, MySQL oder Redis</p>
-                </div>
-                <div class="command-card">
-                    <h4>💾 kmuc backup <span class="new-badge">NEW</span></h4>
-                    <p>Backup/Restore System für Container und Datenbanken</p>
-                </div>
-                <div class="command-card">
-                    <h4>🏥 kmuc health <span class="new-badge">NEW</span></h4>
-                    <p>Health checks für Docker, Container, Datenbank, Ports</p>
-                </div>
-                <div class="command-card">
-                    <h4>🔒 kmuc ssl:* <span class="new-badge">NEW</span></h4>
-                    <p>SSL Management: status, renew, auto-renewal</p>
-                </div>
-                <div class="command-card">
-                    <h4>⚙️ kmuc ci:github <span class="new-badge">NEW</span></h4>
-                    <p>GitHub Actions & GitLab CI Pipeline Generator</p>
-                </div>
-            </div>
-        </section>
+        <div id="noResults" class="no-results hidden">
+            <h3>Keine Ergebnisse gefunden</h3>
+            <p>Versuche einen anderen Suchbegriff</p>
+        </div>
 
         <section class="section">
             <h2>📚 Core Commands</h2>
@@ -448,5 +475,96 @@ kmuc status                 # Verify everything running
             </p>
         </footer>
     </div>
+
+    <script>
+        const searchBox = document.getElementById('searchBox');
+        const sections = document.querySelectorAll('.section');
+        const commandCards = document.querySelectorAll('.command-card');
+        const noResults = document.getElementById('noResults');
+
+        searchBox.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase().trim();
+
+            if (searchTerm === '') {
+                // Zeige alles
+                sections.forEach(section => section.classList.remove('hidden'));
+                commandCards.forEach(card => card.classList.remove('hidden'));
+                noResults.classList.add('hidden');
+                removeHighlights();
+                return;
+            }
+
+            let hasResults = false;
+
+            // Durchsuche alle Command Cards
+            commandCards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    card.classList.remove('hidden');
+                    hasResults = true;
+                    highlightText(card, searchTerm);
+                } else {
+                    card.classList.add('hidden');
+                    removeHighlights(card);
+                }
+            });
+
+            // Zeige/Verstecke Sections basierend auf sichtbaren Cards
+            sections.forEach(section => {
+                const visibleCards = section.querySelectorAll('.command-card:not(.hidden)');
+                if (visibleCards.length > 0) {
+                    section.classList.remove('hidden');
+                } else {
+                    section.classList.add('hidden');
+                }
+            });
+
+            // Zeige "Keine Ergebnisse" wenn nichts gefunden
+            if (!hasResults) {
+                noResults.classList.remove('hidden');
+            } else {
+                noResults.classList.add('hidden');
+            }
+        });
+
+        function highlightText(element, term) {
+            // Entferne alte Highlights
+            removeHighlights(element);
+
+            const walker = document.createTreeWalker(
+                element,
+                NodeFilter.SHOW_TEXT,
+                null,
+                false
+            );
+
+            const nodesToReplace = [];
+            while (walker.nextNode()) {
+                const node = walker.currentNode;
+                if (node.nodeValue.toLowerCase().includes(term)) {
+                    nodesToReplace.push(node);
+                }
+            }
+
+            nodesToReplace.forEach(node => {
+                const text = node.nodeValue;
+                const regex = new RegExp(`(${term})`, 'gi');
+                const highlighted = text.replace(regex, '<span class="highlight">$1</span>');
+
+                const span = document.createElement('span');
+                span.innerHTML = highlighted;
+                node.parentNode.replaceChild(span, node);
+            });
+        }
+
+        function removeHighlights(element = document.body) {
+            const highlights = element.querySelectorAll('.highlight');
+            highlights.forEach(highlight => {
+                const parent = highlight.parentNode;
+                parent.replaceChild(document.createTextNode(highlight.textContent), highlight);
+                parent.normalize();
+            });
+        }
+    </script>
 </body>
 </html>

@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dokumentation - KMUC Dev CLI</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span>⚡</span> KMUC Dev CLI
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="dokumentation.html">Dokumentation</a></li>
+                <li><a href="https://github.com/KmucDigital/dev-cli" target="_blank">GitHub</a></li>
+                <li><a href="https://www.npmjs.com/package/kmuc-dev-cli" target="_blank">npm</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="doc-container">
+        <aside class="toc">
+            <h3 class="toc-title">Inhaltsverzeichnis</h3>
+            <ul class="toc-list">
+                <li><a href="#installation">Installation</a></li>
+                <li><a href="#quick-start">Quick Start</a></li>
+                <li><a href="#commands">Commands</a></li>
+                <li><a href="#project-lifecycle">Project Lifecycle</a></li>
+                <li><a href="#container-management">Container Management</a></li>
+                <li><a href="#database-tools">Database Tools</a></li>
+                <li><a href="#monitoring">Monitoring & Health</a></li>
+                <li><a href="#ssl-management">SSL Management</a></li>
+                <li><a href="#cicd">CI/CD Integration</a></li>
+                <li><a href="#workflows">Common Workflows</a></li>
+                <li><a href="#troubleshooting">Troubleshooting</a></li>
+            </ul>
+        </aside>
+
+        <main class="doc-content">
+            <h1>KMUC Dev CLI Dokumentation</h1>
+            <p>Complete development toolkit from init to deploy. Diese Dokumentation hilft dir dabei, das Maximum aus KMUC Dev CLI herauszuholen.</p>
+
+            <div class="hero-badge">
+                <span>📦</span> Version 2.2.1
+            </div>
+
+            <!-- Installation -->
+            <section id="installation">
+                <h2>Installation</h2>
+                <p>KMUC Dev CLI ist als npm-Paket verfügbar und kann global installiert werden:</p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span>Terminal</span>
+                        <button class="copy-button" onclick="copyToClipboard('npm install -g kmuc-dev-cli')">Copy</button>
+                    </div>
+                    <code>npm install -g kmuc-dev-cli</code>
+                </div>
+
+                <p>Nach der Installation kannst du die Version überprüfen:</p>
+
+                <div class="code-block">
+                    <code>kmuc --version</code>
+                </div>
+
+                <h3>Voraussetzungen</h3>
+                <ul>
+                    <li>Node.js >= 18.0.0</li>
+                    <li>npm >= 9.0.0</li>
+                    <li>Docker & Docker Compose installiert</li>
+                </ul>
+            </section>
+
+            <!-- Quick Start -->
+            <section id="quick-start">
+                <h2>Quick Start</h2>
+                <p>Starte ein neues Projekt in wenigen Schritten:</p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span>Terminal</span>
+                        <button class="copy-button" onclick="copyToClipboard('mkdir my-project\ncd my-project\nkmuc init')">Copy</button>
+                    </div>
+                    <pre><code><span class="terminal-prompt">$</span> mkdir my-project
+<span class="terminal-prompt">$</span> cd my-project
+<span class="terminal-prompt">$</span> kmuc init</code></pre>
+                </div>
+
+                <p>Folge dem interaktiven Setup-Assistenten und wähle deine Projekt-Konfiguration:</p>
+                <ul>
+                    <li>Framework (Express, Next.js, React, Static Site, etc.)</li>
+                    <li>Datenbank (PostgreSQL, MongoDB, MySQL, Redis)</li>
+                    <li>Deployment Target (Local, VPS, Cloud)</li>
+                    <li>SSL & Domain Setup</li>
+                </ul>
+
+                <p>Starte dein Projekt:</p>
+                <div class="code-block">
+                    <code><span class="terminal-prompt">$</span> kmuc publish</code>
+                </div>
+            </section>
+
+            <!-- Commands Overview -->
+            <section id="commands">
+                <h2>Commands</h2>
+                <p>Alle verfügbaren Commands im Überblick:</p>
+
+                <div class="grid grid-2">
+                    <div class="card">
+                        <div class="card-icon">🚀</div>
+                        <h3 class="card-title">kmuc init</h3>
+                        <p class="card-description">Initialisiere ein neues Projekt mit Docker-Setup</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">📦</div>
+                        <h3 class="card-title">kmuc publish</h3>
+                        <p class="card-description">Baue und starte dein Projekt automatisch</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">🛠️</div>
+                        <h3 class="card-title">kmuc dev</h3>
+                        <p class="card-description">Development Mode mit hot-reload</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">📊</div>
+                        <h3 class="card-title">kmuc status</h3>
+                        <p class="card-description">Container Status Dashboard</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">📋</div>
+                        <h3 class="card-title">kmuc logs</h3>
+                        <p class="card-description">Intelligente Log-Ansicht</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">🔄</div>
+                        <h3 class="card-title">kmuc update</h3>
+                        <p class="card-description">Docker Images aktualisieren</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">🧹</div>
+                        <h3 class="card-title">kmuc clean</h3>
+                        <p class="card-description">Docker Ressourcen aufräumen</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">🗄️</div>
+                        <h3 class="card-title">kmuc db:connect</h3>
+                        <p class="card-description">Verbinde mit Datenbank</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">💾</div>
+                        <h3 class="card-title">kmuc backup</h3>
+                        <p class="card-description">Backup/Restore System</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">🏥</div>
+                        <h3 class="card-title">kmuc health</h3>
+                        <p class="card-description">System Health Check</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">🔒</div>
+                        <h3 class="card-title">kmuc ssl:*</h3>
+                        <p class="card-description">SSL Zertifikat Management</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">⚙️</div>
+                        <h3 class="card-title">kmuc ci:*</h3>
+                        <p class="card-description">CI/CD Pipeline Generator</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Project Lifecycle -->
+            <section id="project-lifecycle">
+                <h2>Project Lifecycle</h2>
+
+                <h3>kmuc init</h3>
+                <p>Initialisiert ein neues Projekt mit interaktivem Setup-Assistenten.</p>
+
+                <div class="code-block">
+                    <code>kmuc init [-d, --directory &lt;path&gt;]</code>
+                </div>
+
+                <p><strong>Features:</strong></p>
+                <ul>
+                    <li>Automatische Framework-Erkennung</li>
+                    <li>Dockerfile-Generierung</li>
+                    <li>docker-compose.yml Erstellung</li>
+                    <li>Deployment Scripts</li>
+                    <li>.env.example Datei</li>
+                    <li>Fortschritt wird gespeichert (Fortsetzung bei Unterbrechung)</li>
+                </ul>
+
+                <h3>kmuc publish</h3>
+                <p>Baut Docker Images und startet Container automatisch.</p>
+
+                <div class="code-block">
+                    <code>kmuc publish</code>
+                </div>
+
+                <p><strong>Was passiert:</strong></p>
+                <ul>
+                    <li>Dockerfile Validierung</li>
+                    <li>Docker Images bauen</li>
+                    <li>Container mit docker-compose starten</li>
+                    <li>Health Checks durchführen</li>
+                    <li>Status anzeigen</li>
+                </ul>
+
+                <h3>kmuc dev</h3>
+                <p>Startet Development Mode mit Hot-Reload und Debug-Ports.</p>
+
+                <div class="code-block">
+                    <code>kmuc dev [--no-hot-reload] [--debug] [--no-tail]</code>
+                </div>
+
+                <p><strong>Features:</strong></p>
+                <ul>
+                    <li>Volume-Mounting für Hot-Reload</li>
+                    <li>Debug-Ports (Node.js: 9229, Python: 5678)</li>
+                    <li>Live Log Streaming</li>
+                    <li>Automatisches Restart bei Änderungen</li>
+                </ul>
+            </section>
+
+            <!-- Container Management -->
+            <section id="container-management">
+                <h2>Container Management</h2>
+
+                <h3>kmuc status</h3>
+                <p>Zeigt Container Status Dashboard mit CPU, Memory und Health Indicators.</p>
+
+                <div class="code-block">
+                    <code>kmuc status [-w, --watch]</code>
+                </div>
+
+                <p>Mit <code>--watch</code> Flag werden Live-Updates alle 2 Sekunden angezeigt.</p>
+
+                <h3>kmuc logs</h3>
+                <p>Intelligente Log-Ansicht mit automatischer Filterung und Farbcodierung.</p>
+
+                <div class="code-block">
+                    <code>kmuc logs [--detailed]</code>
+                </div>
+
+                <p><strong>Features:</strong></p>
+                <ul>
+                    <li>Automatische Service-Erkennung</li>
+                    <li>Gefilterte Ausgabe (wichtige Logs)</li>
+                    <li>Farbcodierung nach Log-Level</li>
+                    <li><code>--detailed</code> für alle Logs mit Timestamps</li>
+                </ul>
+
+                <h3>kmuc update</h3>
+                <p>Aktualisiert Docker Images intelligent mit Backup.</p>
+
+                <div class="code-block">
+                    <code>kmuc update [-f, --force]</code>
+                </div>
+
+                <p><strong>Smart Update Prozess:</strong></p>
+                <ul>
+                    <li>Prüft ob neue Versionen verfügbar sind</li>
+                    <li>Erstellt automatisch Backup</li>
+                    <li>Rolling Updates für Zero-Downtime</li>
+                    <li>Health Checks nach Update</li>
+                </ul>
+
+                <h3>kmuc clean</h3>
+                <p>Räumt Docker Ressourcen mit interaktiver Auswahl auf.</p>
+
+                <div class="code-block">
+                    <code>kmuc clean [--all]</code>
+                </div>
+
+                <p><strong>Aufräum-Optionen:</strong></p>
+                <ul>
+                    <li>Stopped Containers</li>
+                    <li>Dangling Images</li>
+                    <li>Unused Volumes</li>
+                    <li>Build Cache</li>
+                </ul>
+            </section>
+
+            <!-- Database Tools -->
+            <section id="database-tools">
+                <h2>Database Tools</h2>
+
+                <h3>kmuc db:connect</h3>
+                <p>Automatische Verbindung zur Datenbank mit Auto-Detection.</p>
+
+                <div class="code-block">
+                    <code>kmuc db:connect</code>
+                </div>
+
+                <p><strong>Unterstützte Datenbanken:</strong></p>
+                <ul>
+                    <li><strong>PostgreSQL:</strong> Öffnet psql</li>
+                    <li><strong>MongoDB:</strong> Öffnet mongosh</li>
+                    <li><strong>MySQL:</strong> Öffnet mysql CLI</li>
+                    <li><strong>Redis:</strong> Öffnet redis-cli</li>
+                </ul>
+
+                <p>Credentials werden automatisch aus <code>.env</code> gelesen.</p>
+
+                <h3>kmuc backup</h3>
+                <p>Umfassendes Backup/Restore System für Container, Volumes und Datenbanken.</p>
+
+                <div class="code-block">
+                    <code>kmuc backup</code>
+                </div>
+
+                <p><strong>Backup Funktionen:</strong></p>
+                <ul>
+                    <li><strong>Create:</strong> Neues Backup erstellen</li>
+                    <li><strong>Restore:</strong> Backup wiederherstellen</li>
+                    <li><strong>List:</strong> Alle Backups anzeigen</li>
+                    <li><strong>Delete:</strong> Backup löschen</li>
+                </ul>
+
+                <p>Backups enthalten:</p>
+                <ul>
+                    <li>Container States</li>
+                    <li>Volume Daten</li>
+                    <li>Datenbank Dumps</li>
+                    <li>Timestamp & Metadaten</li>
+                </ul>
+            </section>
+
+            <!-- Monitoring & Health -->
+            <section id="monitoring">
+                <h2>Monitoring & Health</h2>
+
+                <h3>kmuc health</h3>
+                <p>Umfassender System Health Check.</p>
+
+                <div class="code-block">
+                    <code>kmuc health</code>
+                </div>
+
+                <p><strong>Prüft:</strong></p>
+                <ul>
+                    <li><strong>Docker Engine:</strong> Version & Status</li>
+                    <li><strong>Containers:</strong> Anzahl laufende/gestoppte Container</li>
+                    <li><strong>Database:</strong> Verbindung & Health</li>
+                    <li><strong>Ports:</strong> Verfügbarkeit & Konflikte</li>
+                    <li><strong>Disk Space:</strong> Verfügbarer Speicher</li>
+                </ul>
+            </section>
+
+            <!-- SSL Management -->
+            <section id="ssl-management">
+                <h2>SSL Management</h2>
+
+                <h3>kmuc ssl:status</h3>
+                <p>Zeigt SSL Zertifikat Status und Ablaufdatum.</p>
+
+                <div class="code-block">
+                    <code>kmuc ssl:status</code>
+                </div>
+
+                <h3>kmuc ssl:renew</h3>
+                <p>Erneuert SSL Zertifikate mit Let's Encrypt.</p>
+
+                <div class="code-block">
+                    <code>kmuc ssl:renew</code>
+                </div>
+
+                <p><strong>Modi:</strong></p>
+                <ul>
+                    <li><strong>Auto:</strong> Automatische Erneuerung</li>
+                    <li><strong>Manual:</strong> Manuelle Erneuerung</li>
+                    <li><strong>Dry-run:</strong> Test ohne Änderungen</li>
+                </ul>
+
+                <h3>kmuc ssl:auto</h3>
+                <p>Richtet automatische SSL-Erneuerung via Cron-Job ein.</p>
+
+                <div class="code-block">
+                    <code>kmuc ssl:auto</code>
+                </div>
+            </section>
+
+            <!-- CI/CD Integration -->
+            <section id="cicd">
+                <h2>CI/CD Integration</h2>
+
+                <h3>kmuc ci:github</h3>
+                <p>Generiert GitHub Actions Workflow für automatische Deployments.</p>
+
+                <div class="code-block">
+                    <code>kmuc ci:github</code>
+                </div>
+
+                <p><strong>Erstellt Workflow mit:</strong></p>
+                <ul>
+                    <li>Test Stage</li>
+                    <li>Build Stage (Docker Images)</li>
+                    <li>Push zu Docker Hub/Registry</li>
+                    <li>Deploy Stage (SSH zu Server)</li>
+                    <li>Auto-Detection des Projekt-Typs</li>
+                </ul>
+
+                <h3>kmuc ci:gitlab</h3>
+                <p>Generiert GitLab CI Pipeline.</p>
+
+                <div class="code-block">
+                    <code>kmuc ci:gitlab</code>
+                </div>
+
+                <p>Multi-stage Pipeline mit GitLab Container Registry Integration.</p>
+            </section>
+
+            <!-- Common Workflows -->
+            <section id="workflows">
+                <h2>Common Workflows</h2>
+
+                <h3>Daily Development Workflow</h3>
+                <div class="code-block">
+                    <pre><code><span class="terminal-prompt">$</span> kmuc dev                    <span class="terminal-output"># Start dev environment</span>
+<span class="terminal-prompt">$</span> kmuc logs                   <span class="terminal-output"># Watch logs</span>
+<span class="terminal-prompt">$</span> kmuc status                 <span class="terminal-output"># Check status</span></code></pre>
+                </div>
+
+                <h3>Before Deployment Workflow</h3>
+                <div class="code-block">
+                    <pre><code><span class="terminal-prompt">$</span> kmuc health                 <span class="terminal-output"># Verify all healthy</span>
+<span class="terminal-prompt">$</span> kmuc backup                 <span class="terminal-output"># Create backup</span>
+<span class="terminal-prompt">$</span> kmuc update                 <span class="terminal-output"># Get latest images</span>
+<span class="terminal-prompt">$</span> kmuc publish                <span class="terminal-output"># Deploy</span></code></pre>
+                </div>
+
+                <h3>Maintenance Workflow</h3>
+                <div class="code-block">
+                    <pre><code><span class="terminal-prompt">$</span> kmuc ssl:renew              <span class="terminal-output"># Renew certificates</span>
+<span class="terminal-prompt">$</span> kmuc clean                  <span class="terminal-output"># Free up space</span>
+<span class="terminal-prompt">$</span> kmuc status                 <span class="terminal-output"># Verify everything running</span></code></pre>
+                </div>
+            </section>
+
+            <!-- Troubleshooting -->
+            <section id="troubleshooting">
+                <h2>Troubleshooting</h2>
+
+                <h3>Docker nicht gefunden</h3>
+                <p>Stelle sicher, dass Docker Desktop läuft oder Docker Engine gestartet ist:</p>
+                <div class="code-block">
+                    <code>docker --version</code>
+                </div>
+
+                <h3>Port bereits in Verwendung</h3>
+                <p>Prüfe welcher Prozess den Port blockiert:</p>
+                <div class="code-block">
+                    <code>lsof -i :PORT_NUMBER</code>
+                </div>
+
+                <h3>Container startet nicht</h3>
+                <p>Prüfe die Logs für Fehler:</p>
+                <div class="code-block">
+                    <code>kmuc logs --detailed</code>
+                </div>
+
+                <h3>Fortschritt zurücksetzen</h3>
+                <p>Wenn <code>kmuc init</code> hängt, lösche den gespeicherten Fortschritt:</p>
+                <div class="code-block">
+                    <code>rm -rf ~/.kmuc/.kmuc-progress.json</code>
+                </div>
+
+                <h3>Weitere Hilfe</h3>
+                <p>Bei weiteren Problemen:</p>
+                <ul>
+                    <li><a href="https://github.com/KmucDigital/dev-cli/issues" target="_blank">GitHub Issues</a> - Report bugs</li>
+                    <li><a href="https://github.com/KmucDigital/dev-cli/discussions" target="_blank">Discussions</a> - Ask questions</li>
+                </ul>
+            </section>
+
+            <div class="divider"></div>
+
+            <div class="feature-highlight">
+                <h3>🎯 Pro Tipp</h3>
+                <p>Kombiniere <code>kmuc status --watch</code> mit <code>kmuc logs</code> in zwei Terminal-Fenstern für optimales Monitoring während der Entwicklung.</p>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="dokumentation.html">Dokumentation</a>
+            <a href="https://github.com/KmucDigital/dev-cli" target="_blank">GitHub</a>
+            <a href="https://www.npmjs.com/package/kmuc-dev-cli" target="_blank">npm</a>
+        </div>
+        <p class="footer-text">Made with ❤️ by KMUC Digital</p>
+        <p class="footer-text">MIT License · Version 2.2.1</p>
+    </footer>
+
+    <script>
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = 'Copied!';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                }, 2000);
+            });
+        }
+
+        // Smooth scroll for TOC links
+        document.querySelectorAll('.toc-list a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

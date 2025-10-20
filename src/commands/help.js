@@ -3,6 +3,7 @@ const path = require('path');
 const http = require('http');
 const fs = require('fs').promises;
 const { exec } = require('child_process');
+const { injectVersion } = require('../utils/version');
 
 async function helpCommand() {
   console.log(chalk.cyan.bold('\n📖 KMUC Hoster CLI Hilfe\n'));
@@ -12,7 +13,10 @@ async function helpCommand() {
 
   try {
     // Lese HTML Datei
-    const html = await fs.readFile(htmlPath, 'utf8');
+    let html = await fs.readFile(htmlPath, 'utf8');
+
+    // Inject Version dynamisch
+    html = injectVersion(html);
 
     // Erstelle HTTP Server
     const server = http.createServer((req, res) => {

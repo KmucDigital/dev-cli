@@ -59,7 +59,8 @@
   ],
   "scripts": {
     "test": "node bin/cli.js --version",
-    "prepublishOnly": "node bin/cli.js --version"
+    "prepublishOnly": "node bin/cli.js --version",
+    "webapp": "node webapp/server.js"
   },
   "dependencies": {
     "adm-zip": "^0.5.10",

@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KMUC Dev CLI - Modern Development Toolkit</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span>⚡</span> KMUC Dev CLI
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="dokumentation.html">Dokumentation</a></li>
+                <li><a href="https://github.com/KmucDigital/dev-cli" target="_blank">GitHub</a></li>
+                <li><a href="https://www.npmjs.com/package/kmuc-dev-cli" target="_blank">npm</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-badge">
+            <span>🚀</span> v2.2.1 is now available
+        </div>
+
+        <h1 class="hero-title">Modern Development<br>Toolkit</h1>
+
+        <p class="hero-subtitle">
+            From init to deploy - Complete CLI solution for modern web projects with Docker, databases, and CI/CD integration
+        </p>
+
+        <div class="btn-group">
+            <a href="#install" class="btn btn-primary">
+                Get Started →
+            </a>
+            <a href="dokumentation.html" class="btn btn-secondary">
+                Read Docs
+            </a>
+        </div>
+
+        <div class="terminal">
+            <div class="terminal-header">
+                <div class="terminal-dot"></div>
+                <div class="terminal-dot"></div>
+                <div class="terminal-dot"></div>
+            </div>
+            <div class="terminal-body">
+                <div class="terminal-line">
+                    <span class="terminal-prompt">$</span> <span class="terminal-command">kmuc init</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">✨ Initializing your project...</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-prompt">$</span> <span class="terminal-command">kmuc publish</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">🚀 Building and deploying...</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="scroll-indicator">Scroll to explore</div>
+    </section>
+
+    <section class="section">
+        <div class="section-header">
+            <h2 class="section-title">Why KMUC Dev CLI?</h2>
+            <p class="section-subtitle">Everything you need to build, deploy, and monitor modern web applications</p>
+        </div>
+
+        <div class="grid grid-3">
+            <div class="card fade-in">
+                <span class="card-icon">⚡</span>
+                <h3 class="card-title">Lightning Fast</h3>
+                <p class="card-description">
+                    Optimized for speed. Initialize, build, and deploy your projects in seconds with intelligent caching and parallel processing.
+                </p>
+            </div>
+
+            <div class="card fade-in">
+                <span class="card-icon">🐳</span>
+                <h3 class="card-title">Docker Native</h3>
+                <p class="card-description">
+                    Automatic Docker & docker-compose configuration. Production-ready containers with zero configuration required.
+                </p>
+            </div>
+
+            <div class="card fade-in">
+                <span class="card-icon">🛠️</span>
+                <h3 class="card-title">Framework Agnostic</h3>
+                <p class="card-description">
+                    Support for Express, Next.js, React, Vue, and more. Intelligent detection and optimization for your tech stack.
+                </p>
+            </div>
+
+            <div class="card fade-in">
+                <span class="card-icon">📊</span>
+                <h3 class="card-title">Real-time Monitoring</h3>
+                <p class="card-description">
+                    Live container status, logs, and health checks. Watch mode for continuous monitoring during development.
+                </p>
+            </div>
+
+            <div class="card fade-in">
+                <span class="card-icon">🔒</span>
+                <h3 class="card-title">SSL Management</h3>
+                <p class="card-description">
+                    Automated Let's Encrypt integration. SSL certificate status, renewal, and auto-renewal setup included.
+                </p>
+            </div>
+
+            <div class="card fade-in">
+                <span class="card-icon">🗄️</span>
+                <h3 class="card-title">Database Tools</h3>
+                <p class="card-description">
+                    Auto-connect to PostgreSQL, MongoDB, MySQL, Redis. Backup and restore with a single command.
+                </p>
+            </div>
+
+            <div class="card fade-in">
+                <span class="card-icon">⚙️</span>
+                <h3 class="card-title">CI/CD Ready</h3>
+                <p class="card-description">
+                    Generate GitHub Actions and GitLab CI pipelines instantly. Deployment automation out of the box.
+                </p>
+            </div>
+
+            <div class="card fade-in">
+                <span class="card-icon">🏥</span>
+                <h3 class="card-title">Health Checks</h3>
+                <p class="card-description">
+                    Comprehensive system health monitoring. Docker engine, containers, databases, ports, and disk space.
+                </p>
+            </div>
+
+            <div class="card fade-in">
+                <span class="card-icon">💾</span>
+                <h3 class="card-title">Backup System</h3>
+                <p class="card-description">
+                    Create, restore, list, and delete backups. Timestamped snapshots for containers, volumes, and databases.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" style="background: rgba(255, 255, 255, 0.02);">
+        <div class="section-header">
+            <h2 class="section-title">Essential Commands</h2>
+            <p class="section-subtitle">Everything you need at your fingertips</p>
+        </div>
+
+        <div class="grid grid-2">
+            <div class="command-item">
+                <div>
+                    <div class="command-name">kmuc init</div>
+                    <div class="command-desc">Initialize project with Docker setup</div>
+                </div>
+                <button class="copy-button" onclick="copyCommand('kmuc init')">Copy</button>
+            </div>
+
+            <div class="command-item">
+                <div>
+                    <div class="command-name">kmuc publish</div>
+                    <div class="command-desc">Build and start your project automatically</div>
+                </div>
+                <button class="copy-button" onclick="copyCommand('kmuc publish')">Copy</button>
+            </div>
+
+            <div class="command-item">
+                <div>
+                    <div class="command-name">kmuc dev</div>
+                    <div class="command-desc">Start development mode with hot-reload</div>
+                </div>
+                <button class="copy-button" onclick="copyCommand('kmuc dev')">Copy</button>
+            </div>
+
+            <div class="command-item">
+                <div>
+                    <div class="command-name">kmuc status --watch</div>
+                    <div class="command-desc">Real-time container status dashboard</div>
+                </div>
+                <button class="copy-button" onclick="copyCommand('kmuc status --watch')">Copy</button>
+            </div>
+
+            <div class="command-item">
+                <div>
+                    <div class="command-name">kmuc logs</div>
+                    <div class="command-desc">Intelligent filtered log viewer</div>
+                </div>
+                <button class="copy-button" onclick="copyCommand('kmuc logs')">Copy</button>
+            </div>
+
+            <div class="command-item">
+                <div>
+                    <div class="command-name">kmuc db:connect</div>
+                    <div class="command-desc">Auto-connect to your database</div>
+                </div>
+                <button class="copy-button" onclick="copyCommand('kmuc db:connect')">Copy</button>
+            </div>
+
+            <div class="command-item">
+                <div>
+                    <div class="command-name">kmuc backup</div>
+                    <div class="command-desc">Create backups of containers and data</div>
+                </div>
+                <button class="copy-button" onclick="copyCommand('kmuc backup')">Copy</button>
+            </div>
+
+            <div class="command-item">
+                <div>
+                    <div class="command-name">kmuc health</div>
+                    <div class="command-desc">System health check dashboard</div>
+                </div>
+                <button class="copy-button" onclick="copyCommand('kmuc health')">Copy</button>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem;">
+            <a href="dokumentation.html" class="btn btn-secondary">
+                View All Commands →
+            </a>
+        </div>
+    </section>
+
+    <section class="section" id="install">
+        <div class="section-header">
+            <h2 class="section-title">Get Started</h2>
+            <p class="section-subtitle">Install in seconds - works on macOS, Linux, and Windows</p>
+        </div>
+
+        <div class="code-block" style="max-width: 700px; margin: 0 auto;">
+            <div class="code-block-header">
+                <span>Terminal</span>
+                <button class="copy-button" onclick="copyCommand('npm install -g kmuc-dev-cli')">Copy</button>
+            </div>
+            <code>npm install -g kmuc-dev-cli</code>
+        </div>
+
+        <p style="text-align: center; color: var(--gray-400); margin-top: 2rem;">
+            Then run <code style="background: var(--gray-900); padding: 0.3rem 0.6rem; border-radius: 4px; color: var(--primary-light);">kmuc init</code> in your project directory
+        </p>
+
+        <div class="grid grid-3" style="margin-top: 4rem;">
+            <div class="card">
+                <h3 class="card-title">1. Install</h3>
+                <p class="card-description">Install globally via npm</p>
+                <div class="code-block" style="margin-top: 1rem;">
+                    <code style="font-size: 0.75rem;">npm install -g kmuc-dev-cli</code>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 class="card-title">2. Initialize</h3>
+                <p class="card-description">Create your project setup</p>
+                <div class="code-block" style="margin-top: 1rem;">
+                    <code style="font-size: 0.75rem;">kmuc init</code>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 class="card-title">3. Deploy</h3>
+                <p class="card-description">Build and start containers</p>
+                <div class="code-block" style="margin-top: 1rem;">
+                    <code style="font-size: 0.75rem;">kmuc publish</code>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" style="background: rgba(255, 255, 255, 0.02);">
+        <div class="feature-highlight" style="text-align: center; max-width: 800px; margin: 0 auto;">
+            <h2 class="section-title" style="margin-bottom: 1.5rem;">Supported Technologies</h2>
+
+            <div style="margin-bottom: 3rem;">
+                <h3 style="color: var(--gray-400); font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem;">Frameworks</h3>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
+                    <span class="badge">Express.js</span>
+                    <span class="badge">Next.js</span>
+                    <span class="badge">React</span>
+                    <span class="badge">Vue</span>
+                    <span class="badge">Node.js</span>
+                    <span class="badge">Static Sites</span>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 3rem;">
+                <h3 style="color: var(--gray-400); font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem;">Databases</h3>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
+                    <span class="badge">PostgreSQL</span>
+                    <span class="badge">MongoDB</span>
+                    <span class="badge">MySQL</span>
+                    <span class="badge">Redis</span>
+                </div>
+            </div>
+
+            <div>
+                <h3 style="color: var(--gray-400); font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem;">Infrastructure</h3>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
+                    <span class="badge">Docker</span>
+                    <span class="badge">docker-compose</span>
+                    <span class="badge">nginx</span>
+                    <span class="badge">Let's Encrypt</span>
+                    <span class="badge">GitHub Actions</span>
+                    <span class="badge">GitLab CI</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="dokumentation.html">Dokumentation</a>
+            <a href="https://github.com/KmucDigital/dev-cli" target="_blank">GitHub</a>
+            <a href="https://www.npmjs.com/package/kmuc-dev-cli" target="_blank">npm</a>
+            <a href="https://github.com/KmucDigital/dev-cli/issues" target="_blank">Report Issue</a>
+        </div>
+        <p class="footer-text">Made with ❤️ by KMUC Digital</p>
+        <p class="footer-text">MIT License · Version 2.2.1</p>
+    </footer>
+
+    <script>
+        function copyCommand(command) {
+            navigator.clipboard.writeText(command).then(() => {
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = 'Copied!';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                }, 2000);
+            });
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Fade in animations on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach((el) => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
