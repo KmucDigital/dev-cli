@@ -1,0 +1,51 @@
+# Dependencies
+node_modules
+npm-debug.log
+pnpm-debug.log
+yarn-error.log
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Documentation
+README.md
+CHANGELOG.md
+CONTRIBUTING.md
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temp files
+*.tmp
+*.log
+
+# CI/CD
+.github
+.gitlab-ci.yml
+
+# Test
+test
+tests
+*.test.js
+*.spec.js
+coverage
+
+# Build artifacts
+dist
+build
+
+# Don't ignore these (we need them)
+!webapp
+!src/utils/version.js
+!package.json
+!pnpm-lock.yaml
