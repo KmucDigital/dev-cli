@@ -1,16 +1,19 @@
 # Multi-stage build for optimized production image
+# Build context should be the project root: docker build -f webapp/Dockerfile .
 FROM node:18-alpine AS base
 
 # Stage 1: Dependencies
 FROM base AS deps
 WORKDIR /app
 
-# Copy package files
-COPY package*.json ./
+# Copy package files (from root context)
+COPY package.json ./
+COPY pnpm-lock.yaml ./
 
-# Install production dependencies only
-RUN npm ci --only=production && \
-    npm cache clean --force
+# Install pnpm and production dependencies
+RUN npm install -g pnpm@10.15.1 && \
+    pnpm install --prod --frozen-lockfile && \
+    pnpm store prune
 
 # Stage 2: Build
 FROM base AS builder
@@ -19,8 +22,10 @@ WORKDIR /app
 # Copy dependencies from deps stage
 COPY --from=deps /app/node_modules ./node_modules
 
-# Copy source files
-COPY . .
+# Copy source files (from root context)
+COPY webapp ./webapp
+COPY src/utils/version.js ./src/utils/version.js
+COPY package.json ./package.json
 
 # Stage 3: Production
 FROM base AS runner
