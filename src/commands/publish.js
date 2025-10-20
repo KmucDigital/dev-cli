@@ -98,7 +98,7 @@ async function publishCommand(options) {
       if (dockerfileContent.includes('2>/dev/null ||') || dockerfileContent.includes('|| echo')) {
         validateSpinner.fail('Dockerfile enthält ungültige Shell-Syntax');
         console.log(chalk.red('❌ Dockerfile hat Syntax-Fehler'));
-        console.log(chalk.yellow('💡 Führe "kmuc-hoster init" erneut aus um ein korrektes Dockerfile zu generieren\n'));
+        console.log(chalk.yellow('💡 Führe "kmuc init" erneut aus um ein korrektes Dockerfile zu generieren\n'));
         process.exit(1);
       }
 

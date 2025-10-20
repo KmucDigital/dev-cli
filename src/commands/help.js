@@ -56,10 +56,10 @@ async function helpCommand() {
     console.log();
     console.log(chalk.cyan.bold('Schnellhilfe:\n'));
     console.log(chalk.yellow('📦 Verfügbare Befehle:\n'));
-    console.log(chalk.gray('  kmuc-hoster init'), chalk.dim('- Projekt initialisieren'));
-    console.log(chalk.gray('  kmuc-hoster publish'), chalk.dim('- Container bauen & starten'));
-    console.log(chalk.gray('  kmuc-hoster deploy'), chalk.dim('- Auf Server deployen'));
-    console.log(chalk.gray('  kmuc-hoster help'), chalk.dim('- Diese Hilfe anzeigen'));
+    console.log(chalk.gray('  kmuc init'), chalk.dim('- Projekt initialisieren'));
+    console.log(chalk.gray('  kmuc publish'), chalk.dim('- Container bauen & starten'));
+    console.log(chalk.gray('  kmuc deploy'), chalk.dim('- Auf Server deployen'));
+    console.log(chalk.gray('  kmuc help'), chalk.dim('- Diese Hilfe anzeigen'));
     console.log();
     process.exit(1);
   }

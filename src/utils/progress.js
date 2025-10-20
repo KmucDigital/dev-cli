@@ -9,8 +9,8 @@ const PROGRESS_FILE = '.kmuc-progress.json';
  */
 function getProgressPath() {
   // Speichere in einem globalen Verzeichnis, damit es funktioniert
-  // egal von wo aus kmuc-hoster init aufgerufen wird
-  const configDir = path.join(os.homedir(), '.kmuc-hoster');
+  // egal von wo aus kmuc init aufgerufen wird
+  const configDir = path.join(os.homedir(), '.kmuc');
   return path.join(configDir, PROGRESS_FILE);
 }
 
@@ -18,7 +18,7 @@ function getProgressPath() {
  * Stellt sicher, dass das Config-Verzeichnis existiert
  */
 async function ensureConfigDir() {
-  const configDir = path.join(os.homedir(), '.kmuc-hoster');
+  const configDir = path.join(os.homedir(), '.kmuc');
   try {
     await fs.mkdir(configDir, { recursive: true });
   } catch (error) {

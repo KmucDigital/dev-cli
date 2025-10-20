@@ -19,7 +19,7 @@ async function initCommand(options) {
     console.log(chalk.yellow('💡 Erstelle zuerst ein Projektverzeichnis:\n'));
     console.log(chalk.gray('   mkdir mein-projekt'));
     console.log(chalk.gray('   cd mein-projekt'));
-    console.log(chalk.gray('   kmuc-hoster init\n'));
+    console.log(chalk.gray('   kmuc init\n'));
     process.exit(1);
   }
 
@@ -231,7 +231,7 @@ README.md
 
     console.log();
     console.log(chalk.cyan.bold('⚡ Nächster Schritt:\n'));
-    console.log(chalk.green.bold('  kmuc-hoster publish'));
+    console.log(chalk.green.bold('  kmuc publish'));
     console.log(chalk.gray('  → Baut und startet automatisch alles!\n'));
     console.log(chalk.dim('  Oder manuell:'));
     console.log(chalk.dim('    1. cp .env.example .env (und anpassen)'));
@@ -251,7 +251,7 @@ README.md
 
   } catch (error) {
     console.error(chalk.red('\n❌ Fehler:'), error.message);
-    console.log(chalk.yellow('\n💾 Fortschritt wurde gespeichert. Führe "kmuc-hoster init" erneut aus, um fortzufahren.\n'));
+    console.log(chalk.yellow('\n💾 Fortschritt wurde gespeichert. Führe "kmuc init" erneut aus, um fortzufahren.\n'));
     process.exit(1);
   }
 }

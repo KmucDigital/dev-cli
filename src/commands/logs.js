@@ -15,7 +15,7 @@ async function logsCommand(options) {
     const composeExists = await checkFile('docker-compose.yml');
     if (!composeExists) {
       console.error(chalk.red('\n❌ Kein Docker-Projekt gefunden!'));
-      console.log(chalk.yellow('💡 Führe zuerst "kmuc-hoster init" aus\n'));
+      console.log(chalk.yellow('💡 Führe zuerst "kmuc init" aus\n'));
       process.exit(1);
     }
 
@@ -47,7 +47,7 @@ async function logsCommand(options) {
         spinner.fail('Keine laufenden Container gefunden');
         console.log();
         console.log(chalk.yellow('💡 Starte dein Projekt mit:'));
-        console.log(chalk.gray('   kmuc-hoster publish\n'));
+        console.log(chalk.gray('   kmuc publish\n'));
         process.exit(0);
       }
 
@@ -141,7 +141,7 @@ async function logsCommand(options) {
       process.on('SIGINT', () => {
         console.log(chalk.cyan('\n\n👋 Logs beendet'));
         console.log(chalk.gray('\n💡 Nützliche Befehle:'));
-        console.log(chalk.gray('   kmuc-hoster logs --detailed'), chalk.dim('- Alle Logs'));
+        console.log(chalk.gray('   kmuc logs --detailed'), chalk.dim('- Alle Logs'));
         console.log(chalk.gray('   docker-compose ps'), chalk.dim('- Container Status'));
         console.log(chalk.gray('   docker-compose restart'), chalk.dim('- Container neu starten\n'));
         logsProcess.kill();

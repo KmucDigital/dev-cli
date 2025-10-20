@@ -18,7 +18,7 @@ async function updateCommand(options) {
     const composeExists = await checkFile('docker-compose.yml');
     if (!composeExists) {
       console.error(chalk.red('❌ Kein Docker-Projekt gefunden!'));
-      console.log(chalk.yellow('💡 Führe zuerst "kmuc-hoster init" aus\n'));
+      console.log(chalk.yellow('💡 Führe zuerst "kmuc init" aus\n'));
       process.exit(1);
     }
 
@@ -145,12 +145,12 @@ async function updateCommand(options) {
       } else {
         healthSpinner.warn(`${running}/${containers.length} Container laufen`);
         console.log(chalk.yellow('\n⚠️  Einige Container laufen nicht korrekt'));
-        console.log(chalk.gray('   Prüfe Logs mit: kmuc-hoster logs\n'));
+        console.log(chalk.gray('   Prüfe Logs mit: kmuc logs\n'));
       }
 
       console.log();
       console.log(chalk.green.bold('✅ Update erfolgreich abgeschlossen!\n'));
-      console.log(chalk.gray('💡 Prüfe mit:'), chalk.yellow('kmuc-hoster status'));
+      console.log(chalk.gray('💡 Prüfe mit:'), chalk.yellow('kmuc status'));
       console.log();
 
     } catch (error) {

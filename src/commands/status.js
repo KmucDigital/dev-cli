@@ -15,7 +15,7 @@ async function statusCommand(options) {
     const composeExists = await checkFile('docker-compose.yml');
     if (!composeExists) {
       console.error(chalk.red('\n❌ Kein Docker-Projekt gefunden!'));
-      console.log(chalk.yellow('💡 Führe zuerst "kmuc-hoster init" aus\n'));
+      console.log(chalk.yellow('💡 Führe zuerst "kmuc init" aus\n'));
       process.exit(1);
     }
 
@@ -64,7 +64,7 @@ async function displayStatus() {
 
     if (!psOutput.trim()) {
       console.log(chalk.yellow('⚠️  Keine Container gefunden'));
-      console.log(chalk.gray('   Starte dein Projekt mit: kmuc-hoster publish\n'));
+      console.log(chalk.gray('   Starte dein Projekt mit: kmuc publish\n'));
       return;
     }
 
